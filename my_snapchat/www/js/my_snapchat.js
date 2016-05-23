@@ -19,4 +19,12 @@
             }
         });
     });
+
+    my_snapchat.config(function ($stateProvider) {
+        $stateProvider
+            .state('index', {
+                url: '/',
+                templateUrl: 'partials/home.html'
+            });
+    });
 }());
