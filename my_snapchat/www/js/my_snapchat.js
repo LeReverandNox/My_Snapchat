@@ -4,7 +4,9 @@
 (function () {
     'use strict';
     var my_snapchat = angular.module('my_snapchat', [
-        'ionic'
+        'ionic',
+        'my_snapchat.controllers',
+        'my_snapchat.services'
     ]);
 
 }());
