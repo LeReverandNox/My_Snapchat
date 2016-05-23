@@ -3,5 +3,8 @@
 
 (function () {
     'use strict';
+    var my_snapchat = angular.module('my_snapchat', [
+        'ionic'
+    ]);
 
 }());
