@@ -37,6 +37,11 @@
                 templateUrl: 'partials/login.html',
                 controller: 'RegiLogCtrl'
             })
+            .state('home', {
+                url: '/home',
+                abstract: true,
+                templateUrl: 'partials/home.html',
+                controller: 'HomeCtrl'
             });
         $urlRouterProvider.otherwise('/');
     });
