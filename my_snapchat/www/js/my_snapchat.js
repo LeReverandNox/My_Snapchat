@@ -42,6 +42,15 @@
                 abstract: true,
                 templateUrl: 'partials/home.html',
                 controller: 'HomeCtrl'
+            })
+            .state('home.options', {
+                url: '/options',
+                views: {
+                    'home-options': {
+                        templateUrl: 'partials/options.html',
+                        controller: 'OptionsCtrl'
+                    }
+                }
             });
         $urlRouterProvider.otherwise('/');
     });
