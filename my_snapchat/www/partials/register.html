@@ -1,0 +1,13 @@
+<ion-view view-title="Register" name="register-view">
+    <ion-content class="padding">
+        <form novalidate class="lsit list-inset">
+            <label class="item item-input">
+                <input type="text" placeholder="Email" ng-model="user.email">
+            </label>
+            <label class="item item-input">
+                <input type="password" placeholder="Password" ng-model="user.password">
+            </label>
+        </form>
+            <button class="button button-block button-positive" ng-click="register(user)">Register</button>
+    </ion-content>
+</ion-view>
