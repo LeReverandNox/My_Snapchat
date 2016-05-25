@@ -9,12 +9,14 @@
     controllers.controller('AppCtrl', function () {
         console.log("App");
     });
+
     controllers.controller('IndexCtrl', function ($scope, UserService, $location) {
         var credentials = UserService.loadCredentials();
         if (credentials) {
-            $location.path('/home');
+            $location.path('/home/options');
         }
     });
+
     controllers.controller('RegiLogCtrl', function ($scope, UserService, $ionicPopup, $location) {
         $scope.user = {};
 
@@ -42,15 +44,13 @@
         $scope.login = function (user) {
             UserService.login(user, function (response) {
                 if (response.data.error === true) {
-                    console.log(response.data);
                     var credentials = {};
                     credentials.token = response.data.token;
                     credentials.id = JSON.parse(response.data.data).id;
                     credentials.rememberMe = user.rememberMe || false;
-                    console.log(credentials);
                     UserService.storeCredentials(credentials);
                     $scope.user = {};
-                    $location.path('/');
+                    $location.path('/home/options');
                 } else {
                     $ionicPopup.alert({
                         title: 'Error',
@@ -61,5 +61,24 @@
                 }
             });
         };
+    });
+
+    controllers.controller('HomeCtrl', function ($scope, UserService, $location) {
+        var credentials = UserService.loadCredentials();
+        if (!credentials) {
+            $location.path('/');
+            return false;
+        }
+        if (!credentials.rememberMe) {
+            UserService.clearCredentials();
+        }
+
+        $scope.logout = function () {
+            UserService.clearCredentials();
+            $location.path('/');
+        };
+    });
+
+    controllers.controller('OptionsCtrl', function () {
     });
 }());
