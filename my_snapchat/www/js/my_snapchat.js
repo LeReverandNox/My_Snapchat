@@ -23,7 +23,7 @@
     my_snapchat.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('index', {
-                url: '/index',
+                url: '/',
                 templateUrl: 'partials/index.html',
                 controller: 'IndexCtrl'
             })
@@ -32,6 +32,6 @@
                 templateUrl: 'partials/register.html',
                 controller: 'RegisterCtrl'
             });
-        $urlRouterProvider.otherwise('/index');
+        $urlRouterProvider.otherwise('/');
     });
 }());
