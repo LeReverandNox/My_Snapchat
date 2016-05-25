@@ -30,7 +30,13 @@
             .state('register', {
                 url: '/register',
                 templateUrl: 'partials/register.html',
-                controller: 'RegisterCtrl'
+                controller: 'RegiLogCtrl'
+            })
+            .state('login', {
+                url: '/login',
+                templateUrl: 'partials/login.html',
+                controller: 'RegiLogCtrl'
+            })
             });
         $urlRouterProvider.otherwise('/');
     });
