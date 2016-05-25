@@ -26,11 +26,12 @@
         };
 
         this.loadCredentials = function () {
-            return localStorage.getItem('My_Snapchat_Credentials') || false;
+            return JSON.parse(localStorage.getItem('My_Snapchat_Credentials')) || false;
         };
 
         this.clearCredentials = function () {
             localStorage.removeItem('My_Snapchat_Credentials');
-        }
+            return true;
+        };
     });
 }());
