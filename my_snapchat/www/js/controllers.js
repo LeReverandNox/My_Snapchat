@@ -9,10 +9,13 @@
     controllers.controller('AppCtrl', function () {
         console.log("App");
     });
-    controllers.controller('IndexCtrl', function ($scope) {
-        console.log("Index");
+    controllers.controller('IndexCtrl', function ($scope, UserService, $location) {
+        var credentials = UserService.loadCredentials();
+        if (credentials) {
+            $location.path('/home');
+        }
     });
-    controllers.controller('RegisterCtrl', function ($scope, UserService, $ionicPopup, $location) {
+    controllers.controller('RegiLogCtrl', function ($scope, UserService, $ionicPopup, $location) {
         $scope.user = {};
 
         $scope.register = function (user) {
@@ -22,6 +25,7 @@
                         title: 'Hurray !',
                         template: 'You\'re now registered on My_Snapchat !'
                     }).then(function () {
+                        $scope.user = {};
                         $location.path('/');
                     });
                 } else {
@@ -30,6 +34,29 @@
                         template: response.data.error
                     }).then(function () {
                         $scope.user = {};
+                    });
+                }
+            });
+        };
+
+        $scope.login = function (user) {
+            UserService.login(user, function (response) {
+                if (response.data.error === true) {
+                    console.log(response.data);
+                    var credentials = {};
+                    credentials.token = response.data.token;
+                    credentials.id = JSON.parse(response.data.data).id;
+                    credentials.rememberMe = user.rememberMe || false;
+                    console.log(credentials);
+                    UserService.storeCredentials(credentials);
+                    $scope.user = {};
+                    $location.path('/');
+                } else {
+                    $ionicPopup.alert({
+                        title: 'Error',
+                        template: response.data.error
+                    }).then(function () {
+                        $scope.user.password = '';
                     });
                 }
             });
