@@ -20,11 +20,18 @@
         });
     });
 
-    my_snapchat.config(function ($stateProvider) {
+    my_snapchat.config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('index', {
-                url: '/',
-                templateUrl: 'partials/home.html'
+                url: '/index',
+                templateUrl: 'partials/index.html',
+                controller: 'IndexCtrl'
+            })
+            .state('register', {
+                url: '/register',
+                templateUrl: 'partials/register.html',
+                controller: 'RegisterCtrl'
             });
+        $urlRouterProvider.otherwise('/index');
     });
 }());
