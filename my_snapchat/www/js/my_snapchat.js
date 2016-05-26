@@ -20,7 +20,7 @@
         });
     });
 
-    my_snapchat.config(function ($stateProvider, $urlRouterProvider) {
+    my_snapchat.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         $stateProvider
             .state('index', {
                 url: '/',
@@ -53,5 +53,7 @@
                 }
             });
         $urlRouterProvider.otherwise('/');
+
+        $ionicConfigProvider.tabs.position('bottom');
     });
 }());
