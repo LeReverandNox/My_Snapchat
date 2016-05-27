@@ -43,6 +43,24 @@
         };
     });
 
+    services.service('SnapService', function ($http) {
+        this.apiUrl = 'http://snapchat.samsung-campus.net/api.php';
+
+        this.takePicture = function (callback) {
+            navigator.camera.getPicture(
+                function successCallback(data) {
+                    callback(data);
+                },
+                function errorCallback(message) {
+                    console.log(message);
+                },
+                {
+                    quality: 50
+                }
+            );
+        };
+
+    });
 
     services.service('ToolsService', function () {
         this.removeAllChildren = function (element) {
