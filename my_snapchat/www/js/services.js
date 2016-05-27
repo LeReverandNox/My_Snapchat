@@ -32,5 +32,15 @@
             localStorage.removeItem('My_Snapchat_Credentials');
             return true;
         };
+
+        this.getUsers = function (credentials, successCallback) {
+            var littleCreddentials = {
+                email: credentials.email,
+                token: credentials.token
+            };
+            $http.post(this.apiUrl + '?option=toutlemonde', littleCreddentials)
+                .then(successCallback);
+        };
     });
+
 }());
