@@ -52,6 +52,15 @@
                         controller: 'OptionsCtrl'
                     }
                 }
+            })
+            .state('home.send-snap', {
+                url: '/send-snap',
+                views: {
+                    'home-send-snap': {
+                        templateUrl: 'partials/send-snap.html',
+                        controller: 'SendSnapCtrl'
+                    }
+                }
             });
         $urlRouterProvider.otherwise('/');
 
