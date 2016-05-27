@@ -7,16 +7,15 @@
     var services = angular.module('my_snapchat.services', []);
 
     services.service('UserService', function ($http) {
-        var self = this;
         this.apiUrl = 'http://snapchat.samsung-campus.net/api.php';
 
         this.register = function (user, successCallback) {
-            $http.post(self.apiUrl + '?option=inscription', user)
+            $http.post(this.apiUrl + '?option=inscription', user)
                 .then(successCallback);
         };
 
         this.login = function (user, successCallback) {
-            $http.post(self.apiUrl + '?option=connexion', user)
+            $http.post(this.apiUrl + '?option=connexion', user)
                 .then(successCallback);
         };
 
