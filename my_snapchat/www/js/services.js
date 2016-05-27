@@ -43,4 +43,12 @@
         };
     });
 
+
+    services.service('ToolsService', function () {
+        this.removeAllChildren = function (element) {
+            while (element.firstChild) {
+                element.removeChild(element.firstChild);
+            }
+        };
+    });
 }());
