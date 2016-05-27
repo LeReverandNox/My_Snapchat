@@ -10,7 +10,7 @@
         console.log("App");
     });
 
-    controllers.controller('IndexCtrl', function ($scope, UserService, $location) {
+    controllers.controller('IndexCtrl', function (UserService, $location) {
         var credentials = UserService.loadCredentials();
         if (credentials) {
             $location.path('/home/send-snap');
@@ -81,6 +81,7 @@
     });
 
     controllers.controller('OptionsCtrl', function () {
+        console.log('Options');
     });
 
     controllers.controller('SendSnapCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup) {
@@ -138,6 +139,12 @@
                     });
                 } else {
                     var users = [];
+                    // DEBUG
+                    users.push({
+                        id: 106,
+                        isChecked: false
+                    });
+                    //
                     JSON.parse(response.data.data).forEach(function (id) {
                         users.push({
                             id: id,
@@ -188,10 +195,10 @@
         };
     });
 
-    controllers.controller('GetSnapsCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $state) {
+    controllers.controller('GetSnapsCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup) {
         this.credentials = UserService.loadCredentials();
         this.snaps = [];
-        $scope.snaps;
+        $scope.snaps = [];
         $scope.isListingSnaps = false;
         $scope.isViewingSnap = false;
         var self = this;
@@ -249,13 +256,12 @@
                 snapHolder.appendChild(img);
                 setTimeout(function () {
                     markAsViewed(snap.id_snap);
-                    // console.log("On l'a vu, on delete");
-                    // $scope.isViewingSnap = false;
                 }, (snap.duration * 1000));
             };
         };
 
 
+        console.log(this.credentials);
         $scope.init();
     });
 
