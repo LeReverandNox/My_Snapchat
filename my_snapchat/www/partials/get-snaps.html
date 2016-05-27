@@ -1,0 +1,19 @@
+<ion-view view-title="My Snaps' !">
+  <ion-content>
+    <ion-refresher
+    pulling-text="Refresh..."
+    on-refresh="init()">
+  </ion-refresher>
+
+
+  <div class="list" ng-show="isListingSnaps">
+      <ion-item collection-repeat="snap in snaps">
+        <p ng-click="viewSnap(snap)">{{ snap.id_sender}}</p>
+    </ion-item>
+  </div>
+
+  <div ng-show="isViewingSnap">
+    <div class="get-snap-holder"></div>
+  </div>
+  </ion-content>
+</ion-view>
