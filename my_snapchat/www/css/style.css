@@ -3,6 +3,6 @@
    v2.0 | 20110126
    License: none (public domain)
 */
-.send-snap-img {
+.send-snap-img, .get-snap-img {
     width: 100%;
 }
