@@ -197,6 +197,30 @@
         var self = this;
         var snapHolder = document.querySelector('.get-snap-holder');
 
+        $scope.init = function () {
+            $scope.isViewingSnap = false;
+            self.snaps = [];
+            ToolsService.removeAllChildren(snapHolder);
+
+            SnapService.getSnaps(self.credentials, function (response) {
+                // console.log(response);
+                if (response.data.error !== true) {
+                    $ionicPopup.alert({
+                        title: 'Error !',
+                        template: response.error
+                    }).then(function () {
+                        $scope.logout();
+                    });
+                } else {
+                    JSON.parse(response.data.data).forEach(function (snap) {
+                        self.snaps.push(snap);
+                    });
+                    $scope.snaps = self.snaps;
+                    console.log(self.snaps);
+                    console.log("SAMERE");
+                    $scope.isListingSnaps = true;
+                    $scope.$broadcast('scroll.refreshComplete');
+                }
             });
         };
     });
