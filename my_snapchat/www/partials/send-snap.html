@@ -1,0 +1,38 @@
+<ion-view view-title="Let's Snap' !">
+  <ion-content>
+    <div class="send-snap-holder" ng-hide="isChoosingUsers || isSelectingTime"></div>
+
+    <div ng-click="launchCamera()" class="button button-block button-calm" ng-hide="isSnaping">Take a picture !</div>
+
+    <div class="button-bar" ng-show="isSnaping">
+       <div class="button button-assertive" ng-click="reset()">Cancel</div>
+       <div class="button button-calm" ng-click="chooseUsers()" ng-show="isGoingToChooseUsers">Who ?</div>
+       <div class="button button-calm" ng-click="selectTime()" ng-show="isChoosingUsers">How long ?</div>
+       <div class="button button-calm" ng-click="sendSnap()" ng-show="isSelectingTime">Send !</div>
+    </div>
+
+    <ion-item collection-repeat="user in users" ng-show="isChoosingUsers">
+        <ion-checkbox ng-model="user.isChecked">User #{{ user.id | leftpad:3 }}</ion-checkbox>
+    </ion-item>
+
+    <ion-item ng-show="isSelectingTime">
+<!--       <ion-label>Duration</ion-label>
+      <ion-select ng-model="time">
+        <ion-option ng-repeat="value in values" value="{{ value }}" ng-selected="{{value === time}}">{{ value}}</ion-option>
+      </ion-select>
+ -->
+      <div class="item item-input item-select">
+        <div class="input-label">
+          Duration
+        </div>
+        <select ng-model="time" ng-options="value for value in values" ng-change="setTime(time)">
+            <!-- <option ng-repeat="value in values" value="{{ value }}" ng-selected="{{value == time}}">{{ value }} sec.</option> -->
+        </select>
+      </div>
+    </ion-item>
+    <div class="list">
+
+
+    </div>
+  </ion-content>
+</ion-view>
