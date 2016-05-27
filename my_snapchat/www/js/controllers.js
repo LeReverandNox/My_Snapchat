@@ -84,7 +84,6 @@
     });
 
     controllers.controller('SendSnapCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup) {
-        console.log("SnapCtrl");
         $scope.isSnaping = false;
         $scope.isGoingToChooseUsers = false;
         $scope.isChoosingUsers = false;
@@ -103,7 +102,9 @@
             $scope.isSelectingTime = false;
             ToolsService.removeAllChildren(snapHolder);
             self.image = null;
+            $scope.time = 7;
             self.time = 7;
+            $scope.users = [];
         };
 
         $scope.launchCamera = function () {
@@ -126,15 +127,25 @@
             $scope.isGoingToChooseUsers = false;
             $scope.isChoosingUsers = true;
             $scope.isSelectingTime = false;
-            UserService.getUsers(self.credentials, function (response) {
-                var users = [];
-                JSON.parse(response.data.data).forEach(function (id) {
-                    users.push({
-                        id: id,
-                        isChecked: false
+            UserService.getUsers(self.credentials, function success(response) {
+                if (response.data.error !== true) {
+                    $ionicPopup.alert({
+                        title: 'Error !',
+                        template: response.data.error
+                    }).then(function () {
+                        $scope.reset();
+                        $scope.logout();
                     });
-                });
-                $scope.users = users;
+                } else {
+                    var users = [];
+                    JSON.parse(response.data.data).forEach(function (id) {
+                        users.push({
+                            id: id,
+                            isChecked: false
+                        });
+                    });
+                    $scope.users = users;
+                }
             });
         };
 
@@ -156,13 +167,26 @@
             });
 
             SnapService.sendSnap(self.time, self.credentials, destinataires, self.image, function (data) {
-                console.log(data);
-                $ionicPopup.alert({
-                    title: 'Well done !',
-                    template: 'Your snap has been shipped!'
-                }).then(function () {
-                    $scope.reset();
-                });
+                var response = JSON.parse(data.response);
+                if (response.error !== true) {
+                    $ionicPopup.alert({
+                        title: 'Error !',
+                        template: response.error
+                    }).then(function () {
+                        $scope.reset();
+                        $scope.logout();
+                    });
+                } else {
+                    $ionicPopup.alert({
+                        title: 'Well done !',
+                        template: 'Your snap has been shipped!'
+                    }).then(function () {
+                        $scope.reset();
+                    });
+                }
+            });
+        };
+    });
 
             });
         };
