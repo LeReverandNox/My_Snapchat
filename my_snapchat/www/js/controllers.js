@@ -188,7 +188,17 @@
         };
     });
 
+    controllers.controller('GetSnapsCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $state) {
+        this.credentials = UserService.loadCredentials();
+        this.snaps = [];
+        $scope.snaps;
+        $scope.isListingSnaps = false;
+        $scope.isViewingSnap = false;
+        var self = this;
+        var snapHolder = document.querySelector('.get-snap-holder');
+
             });
         };
     });
+
 }());
