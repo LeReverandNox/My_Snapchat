@@ -6,7 +6,8 @@
     var my_snapchat = angular.module('my_snapchat', [
         'ionic',
         'my_snapchat.controllers',
-        'my_snapchat.services'
+        'my_snapchat.services',
+        'my_snapchat.filters'
     ]);
 
     my_snapchat.run(function ($ionicPlatform) {
