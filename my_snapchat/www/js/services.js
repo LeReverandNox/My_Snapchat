@@ -79,8 +79,16 @@
                 temps: time,
                 token: credentials.token
             };
-            console.log(options);
             ft.upload(image, encodeURI(this.apiUrl + '?option=image'), successCallback, null, options);
+        };
+
+        this.getSnaps = function (credentials, successCallback) {
+            var littleCreddentials = {
+                email: credentials.email,
+                token: credentials.token
+            };
+            $http.post(this.apiUrl + '?option=newsnap', littleCreddentials)
+                .then(successCallback);
         };
     });
 
