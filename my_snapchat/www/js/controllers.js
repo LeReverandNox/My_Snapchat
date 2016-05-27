@@ -237,6 +237,25 @@
             });
         };
 
+        $scope.viewSnap = function (snap) {
+            $scope.isListingSnaps = false;
+            $scope.isViewingSnap = true;
+            console.log(snap);
+
+            var img = new Image();
+            img.src = snap.url;
+            img.className += 'get-snap-img';
+            img.onload = function () {
+                snapHolder.appendChild(img);
+                setTimeout(function () {
+                    markAsViewed(snap.id_snap);
+                    // console.log("On l'a vu, on delete");
+                    // $scope.isViewingSnap = false;
+                }, (snap.duration * 1000));
+            };
+        };
+
+
     });
 
 }());
