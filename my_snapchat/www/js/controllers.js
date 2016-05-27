@@ -13,7 +13,7 @@
     controllers.controller('IndexCtrl', function ($scope, UserService, $location) {
         var credentials = UserService.loadCredentials();
         if (credentials) {
-            $location.path('/home/options');
+            $location.path('/home/send-snap');
         }
     });
 
@@ -47,10 +47,11 @@
                     var credentials = {};
                     credentials.token = response.data.token;
                     credentials.id = JSON.parse(response.data.data).id;
+                    credentials.email = user.email;
                     credentials.rememberMe = user.rememberMe || false;
                     UserService.storeCredentials(credentials);
                     $scope.user = {};
-                    $location.path('/home/options');
+                    $location.path('/home/send-snap');
                 } else {
                     $ionicPopup.alert({
                         title: 'Error',
