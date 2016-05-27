@@ -61,6 +61,15 @@
                         controller: 'SendSnapCtrl'
                     }
                 }
+            })
+            .state('home.get-snaps', {
+                url: '/get-snaps',
+                views: {
+                    'home-get-snaps': {
+                        templateUrl: 'partials/get-snaps.html',
+                        controller: 'GetSnapsCtrl'
+                    }
+                }
             });
         $urlRouterProvider.otherwise('/');
 
