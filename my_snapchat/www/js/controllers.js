@@ -223,6 +223,20 @@
                 }
             });
         };
+
+        var markAsViewed = function (id) {
+            SnapService.markAsViewed(self.credentials, id, function (response) {
+                if (response.data.error !== true) {
+                    $ionicPopup.alert({
+                        title: 'Error !',
+                        template: response.error
+                    });
+                } else {
+                    $scope.init();
+                }
+            });
+        };
+
     });
 
 }());
