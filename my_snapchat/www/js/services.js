@@ -1,5 +1,5 @@
 /*jslint browser this for */
-/*global angular alert */
+/*global angular alert FileTransfer FileUploadOptions */
 
 (function () {
     'use strict';
@@ -60,6 +60,28 @@
             );
         };
 
+        this.sendSnap = function (time, credentials, destinataires, image, successCallback) {
+            var ft = new FileTransfer();
+
+            var options = new FileUploadOptions();
+            options.fileKey = "file";
+            options.fileName = image.substr(image.lastIndexOf('/') + 1);
+            options.mimeType = "image/jpeg";
+
+            var dests = [];
+            destinataires.forEach(function (user) {
+                dests.push(user.id);
+            });
+
+            options.params = {
+                email: credentials.email,
+                u2: dests.join(','),
+                temps: time,
+                token: credentials.token
+            };
+            console.log(options);
+            ft.upload(image, encodeURI(this.apiUrl + '?option=image'), successCallback, null, options);
+        };
     });
 
     services.service('ToolsService', function () {
