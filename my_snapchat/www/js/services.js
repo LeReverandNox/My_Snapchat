@@ -34,11 +34,11 @@
         };
 
         this.getUsers = function (credentials, successCallback) {
-            var littleCreddentials = {
+            var littleCredentials = {
                 email: credentials.email,
                 token: credentials.token
             };
-            $http.post(this.apiUrl + '?option=toutlemonde', littleCreddentials)
+            $http.post(this.apiUrl + '?option=toutlemonde', littleCredentials)
                 .then(successCallback);
         };
     });
@@ -83,11 +83,21 @@
         };
 
         this.getSnaps = function (credentials, successCallback) {
-            var littleCreddentials = {
+            var littleCredentials = {
                 email: credentials.email,
                 token: credentials.token
             };
-            $http.post(this.apiUrl + '?option=newsnap', littleCreddentials)
+            $http.post(this.apiUrl + '?option=newsnap', littleCredentials)
+                .then(successCallback);
+        };
+
+        this.markAsViewed = function (credentials, snapId, successCallback) {
+            var data = {
+                email: credentials.email,
+                token: credentials.token,
+                id: snapId
+            };
+            $http.post(this.apiUrl + '?option=vu', data)
                 .then(successCallback);
         };
     });
