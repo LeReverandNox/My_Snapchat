@@ -24,6 +24,7 @@
     my_snapchat.config(function ($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         $stateProvider
             .state('index', {
+                cache: false,
                 url: '/',
                 templateUrl: 'partials/index.html',
                 controller: 'IndexCtrl'
@@ -39,6 +40,7 @@
                 controller: 'RegiLogCtrl'
             })
             .state('home', {
+                cache: false,
                 url: '/home',
                 abstract: true,
                 templateUrl: 'partials/home.html',
@@ -63,6 +65,7 @@
                 }
             })
             .state('home.get-snaps', {
+                cache: false,
                 url: '/get-snaps',
                 views: {
                     'home-get-snaps': {
