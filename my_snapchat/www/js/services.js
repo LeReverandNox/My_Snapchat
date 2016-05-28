@@ -7,6 +7,8 @@
     var services = angular.module('my_snapchat.services', []);
 
     services.service('UserService', function ($http) {
+        this.credentials = {};
+
         this.apiUrl = 'http://snapchat.samsung-campus.net/api.php';
 
         this.register = function (user, successCallback) {
@@ -25,7 +27,7 @@
         };
 
         this.loadCredentials = function () {
-            return JSON.parse(localStorage.getItem('My_Snapchat_Credentials')) || false;
+            this.credentials = JSON.parse(localStorage.getItem('My_Snapchat_Credentials')) || false;
         };
 
         this.clearCredentials = function () {
