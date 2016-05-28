@@ -7,13 +7,14 @@
     var controllers = angular.module('my_snapchat.controllers', []);
 
     controllers.controller('AppCtrl', function () {
-        console.log("App");
+        // console.log("App");
     });
 
     controllers.controller('IndexCtrl', function (UserService, $location) {
-        var credentials = UserService.loadCredentials();
-        if (credentials) {
+        UserService.loadCredentials();
+        if (UserService.credentials) {
             $location.path('/home/send-snap');
+            return true;
         }
     });
 
@@ -65,18 +66,18 @@
     });
 
     controllers.controller('HomeCtrl', function ($scope, UserService, $location) {
-        var credentials = UserService.loadCredentials();
-        if (!credentials) {
+        UserService.loadCredentials();
+        if (!UserService.credentials) {
             $location.path('/');
             return false;
         }
-        if (!credentials.rememberMe) {
+        if (!UserService.credentials.rememberMe) {
             UserService.clearCredentials();
         }
-
         $scope.logout = function () {
             UserService.clearCredentials();
             $location.path('/');
+            return true;
         };
     });
 
@@ -92,7 +93,6 @@
         var snapHolder = document.querySelector('.send-snap-holder');
 
         this.image = null;
-        this.credentials = UserService.loadCredentials();
         this.time = 7;
 
         var self = this;
@@ -128,7 +128,7 @@
             $scope.isGoingToChooseUsers = false;
             $scope.isChoosingUsers = true;
             $scope.isSelectingTime = false;
-            UserService.getUsers(self.credentials, function success(response) {
+            UserService.getUsers(UserService.credentials, function success(response) {
                 if (response.data.error !== true) {
                     $ionicPopup.alert({
                         title: 'Error !',
@@ -173,7 +173,7 @@
                 return object.isChecked === true;
             });
 
-            SnapService.sendSnap(self.time, self.credentials, destinataires, self.image, function (data) {
+            SnapService.sendSnap(self.time, UserService.credentials, destinataires, self.image, function (data) {
                 var response = JSON.parse(data.response);
                 if (response.error !== true) {
                     $ionicPopup.alert({
@@ -196,7 +196,6 @@
     });
 
     controllers.controller('GetSnapsCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup) {
-        this.credentials = UserService.loadCredentials();
         this.snaps = [];
         $scope.snaps = [];
         $scope.isListingSnaps = false;
@@ -209,7 +208,7 @@
             self.snaps = [];
             ToolsService.removeAllChildren(snapHolder);
 
-            SnapService.getSnaps(self.credentials, function (response) {
+            SnapService.getSnaps(UserService.credentials, function (response) {
                 // console.log(response);
                 if (response.data.error !== true) {
                     $ionicPopup.alert({
@@ -224,7 +223,6 @@
                     });
                     $scope.snaps = self.snaps;
                     console.log(self.snaps);
-                    console.log("SAMERE");
                     $scope.isListingSnaps = true;
                     $scope.$broadcast('scroll.refreshComplete');
                 }
@@ -232,7 +230,7 @@
         };
 
         var markAsViewed = function (id) {
-            SnapService.markAsViewed(self.credentials, id, function (response) {
+            SnapService.markAsViewed(UserService.credentials, id, function (response) {
                 if (response.data.error !== true) {
                     $ionicPopup.alert({
                         title: 'Error !',
@@ -260,8 +258,6 @@
             };
         };
 
-
-        console.log(this.credentials);
         $scope.init();
     });
 
