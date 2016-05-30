@@ -6,3 +6,32 @@
 .send-snap-img, .get-snap-img {
     width: 100%;
 }
+
+.index-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.index-bottom .button {
+    margin: 0;
+    border-radius: 0;
+    min-height: 65px;
+    line-height: 65px;
+    font-size: 2em;
+}
+.index-back {
+    background-color: yellow;
+}
+.index-back .scroll {
+    display: table !important;
+    width: 100% !important;
+    height: 80% !important;
+}
+.boo-holder {
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+.boo-holder img {
+    width: 70%;
+}
