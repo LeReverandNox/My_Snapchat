@@ -1,6 +1,6 @@
 <ion-view view-title="Let's Snap' !">
   <ion-content>
-    <ion-item class="send-snap-holder" ng-hide="!isSnaping || isChoosingUsers || isSelectingTime"></ion-item>
+    <div class="send-snap-holder" ng-hide="!isSnaping || isChoosingUsers || isSelectingTime"></div>
 
     <div collection-repeat="user in users" ng-show="isChoosingUsers">
         <ion-checkbox ng-model="user.isChecked">User #{{ user.id | leftpad:3 }}</ion-checkbox>
@@ -17,7 +17,7 @@
     </ion-item>
   </ion-content>
 
-  <ion-footer-bar>
+  <ion-footer-bar class="send-snap-footer-bar">
     <div class="button-bar">
     <div ng-click="launchCamera()" class="button button-calm" ng-hide="isSnaping">Take a picture !</div>
        <div class="button button-assertive" ng-click="reset()" ng-show="isSnaping">Cancel</div>

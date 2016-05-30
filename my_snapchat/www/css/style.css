@@ -35,3 +35,14 @@
 .boo-holder img {
     width: 70%;
 }
+
+.send-snap-footer-bar {
+    padding: 0;
+}
+.send-snap-footer-bar .button-bar .button {
+    font-size: 1.5em;
+    line-height: 2em;
+}
+.send-snap-holder {
+    padding: 0;
+}
