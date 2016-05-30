@@ -6,10 +6,6 @@
 
     var controllers = angular.module('my_snapchat.controllers', []);
 
-    controllers.controller('AppCtrl', function () {
-        // console.log("App");
-    });
-
     controllers.controller('IndexCtrl', function (UserService, $location) {
         UserService.loadCredentials();
         if (UserService.credentials) {
