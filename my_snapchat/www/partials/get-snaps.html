@@ -5,6 +5,12 @@
     on-refresh="init()" ng-hide="isViewingSnap">
   </ion-refresher>
 
+  <div ng-show="isViewingSnap">
+    <div class="countdown">
+      {{ remaining }}
+    </div>
+    <div class="get-snap-holder"></div>
+  </div>
 
   <div class="list" ng-show="isListingSnaps">
       <ion-item collection-repeat="snap in snaps">
@@ -12,8 +18,5 @@
     </ion-item>
   </div>
 
-  <div ng-show="isViewingSnap">
-    <div class="get-snap-holder"></div>
-  </div>
   </ion-content>
 </ion-view>

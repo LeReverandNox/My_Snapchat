@@ -222,11 +222,12 @@
         };
     });
 
-    controllers.controller('GetSnapsCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup) {
+    controllers.controller('GetSnapsCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $interval, $ionicLoading) {
         this.snaps = [];
         $scope.snaps = [];
         $scope.isListingSnaps = false;
         $scope.isViewingSnap = false;
+        $scope.remaining = 0;
         var self = this;
         var snapHolder = document.querySelector('.get-snap-holder');
 
@@ -269,16 +270,27 @@
 
         $scope.viewSnap = function (snap) {
             $scope.isListingSnaps = false;
-            $scope.isViewingSnap = true;
+            var duration = snap.duration * 1000;
+            $scope.remaining = snap.duration;
+
+            $ionicLoading.show({
+                template: 'Loading...'
+            });
 
             var img = new Image();
             img.src = snap.url;
             img.className += 'get-snap-img';
             img.onload = function () {
+                $scope.isViewingSnap = true;
+                $ionicLoading.hide();
                 snapHolder.appendChild(img);
+                var itv = $interval(function () {
+                    $scope.remaining -= 1;
+                }, 1000);
                 setTimeout(function () {
+                    $interval.cancel(itv);
                     markAsViewed(snap.id_snap);
-                }, (snap.duration * 1000));
+                }, (duration));
             };
         };
 
