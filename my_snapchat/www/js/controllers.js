@@ -17,27 +17,6 @@
     controllers.controller('RegiLogCtrl', function ($scope, UserService, $ionicPopup, $location) {
         $scope.user = {};
 
-        $scope.register = function (user) {
-            UserService.register(user, function (response) {
-                if (response.data.error === true) {
-                    $ionicPopup.alert({
-                        title: 'Hurray !',
-                        template: 'You\'re now registered on My_Snapchat !'
-                    }).then(function () {
-                        $scope.user = {};
-                        $location.path('/');
-                    });
-                } else {
-                    $ionicPopup.alert({
-                        title: 'Error',
-                        template: response.data.error
-                    }).then(function () {
-                        $scope.user = {};
-                    });
-                }
-            });
-        };
-
         $scope.login = function (user) {
             UserService.login(user, function (response) {
                 if (response.data.error === true) {
@@ -55,6 +34,27 @@
                         template: response.data.error
                     }).then(function () {
                         $scope.user.password = '';
+                    });
+                }
+            });
+        };
+
+        $scope.register = function (user) {
+            UserService.register(user, function (response) {
+                if (response.data.error === true) {
+                    $ionicPopup.alert({
+                        title: 'Hurray !',
+                        template: 'You\'re now registered on My_Snapchat !'
+                    }).then(function () {
+                        $scope.login(user);
+                        $location.path('/');
+                    });
+                } else {
+                    $ionicPopup.alert({
+                        title: 'Error',
+                        template: response.data.error
+                    }).then(function () {
+                        $scope.user = {};
                     });
                 }
             });
