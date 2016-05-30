@@ -229,7 +229,6 @@
             ToolsService.removeAllChildren(snapHolder);
 
             SnapService.getSnaps(UserService.credentials, function (response) {
-                // console.log(response);
                 if (response.data.error !== true) {
                     $ionicPopup.alert({
                         title: 'Error !',
@@ -242,7 +241,6 @@
                         self.snaps.push(snap);
                     });
                     $scope.snaps = self.snaps;
-                    console.log(self.snaps);
                     $scope.isListingSnaps = true;
                     $scope.$broadcast('scroll.refreshComplete');
                 }
@@ -265,7 +263,6 @@
         $scope.viewSnap = function (snap) {
             $scope.isListingSnaps = false;
             $scope.isViewingSnap = true;
-            console.log(snap);
 
             var img = new Image();
             img.src = snap.url;
