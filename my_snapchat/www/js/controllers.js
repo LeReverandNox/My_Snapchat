@@ -27,7 +27,7 @@
                     credentials.rememberMe = user.rememberMe || false;
                     UserService.storeCredentials(credentials);
                     $scope.user = {};
-                    $location.path('/home/send-snap');
+                    $location.path('/');
                 } else {
                     $ionicPopup.alert({
                         title: 'Error',
