@@ -191,7 +191,7 @@
                 template: 'Sending...'
             });
 
-            SnapService.sendSnap(self.time, UserService.credentials, destinataires, self.image, function (data) {
+            SnapService.sendSnap(self.time, UserService.credentials, self.destinataires, self.image, function (data) {
                 var response = JSON.parse(data.response);
                 if (response.error !== true) {
                     $ionicPopup.alert({
