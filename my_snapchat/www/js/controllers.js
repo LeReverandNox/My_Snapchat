@@ -61,7 +61,7 @@
         };
     });
 
-    controllers.controller('HomeCtrl', function ($scope, UserService, $location) {
+    controllers.controller('HomeCtrl', function ($scope, UserService, $location, $ionicHistory) {
         UserService.loadCredentials();
         if (!UserService.credentials) {
             $location.path('/');
@@ -75,6 +75,11 @@
             $location.path('/');
             return true;
         };
+
+        $ionicHistory.nextViewOptions({
+            disableAnimate: true,
+            disableBack: true
+        });
     });
 
     controllers.controller('OptionsCtrl', function () {
