@@ -1,19 +1,10 @@
 <ion-view view-title="Let's Snap' !">
   <ion-content>
-    <div class="send-snap-holder" ng-hide="isChoosingUsers || isSelectingTime"></div>
+    <ion-item class="send-snap-holder" ng-hide="!isSnaping || isChoosingUsers || isSelectingTime"></ion-item>
 
-    <div ng-click="launchCamera()" class="button button-block button-calm" ng-hide="isSnaping">Take a picture !</div>
-
-    <div class="button-bar" ng-show="isSnaping">
-       <div class="button button-assertive" ng-click="reset()">Cancel</div>
-       <div class="button button-calm" ng-click="chooseUsers()" ng-show="isGoingToChooseUsers">Who ?</div>
-       <div class="button button-calm" ng-click="verifyUsers()" ng-show="isChoosingUsers">How long ?</div>
-       <div class="button button-calm" ng-click="sendSnap()" ng-show="isSelectingTime">Send !</div>
-    </div>
-
-    <ion-item collection-repeat="user in users" ng-show="isChoosingUsers">
+    <div collection-repeat="user in users" ng-show="isChoosingUsers">
         <ion-checkbox ng-model="user.isChecked">User #{{ user.id | leftpad:3 }}</ion-checkbox>
-    </ion-item>
+    </div>
 
     <ion-item ng-show="isSelectingTime">
       <div class="item item-input item-select">
@@ -24,6 +15,15 @@
         </select>
       </div>
     </ion-item>
-
   </ion-content>
+
+  <ion-footer-bar>
+    <div class="button-bar">
+    <div ng-click="launchCamera()" class="button button-calm" ng-hide="isSnaping">Take a picture !</div>
+       <div class="button button-assertive" ng-click="reset()" ng-show="isSnaping">Cancel</div>
+       <div class="button button-calm" ng-click="chooseUsers()" ng-show="isGoingToChooseUsers">Who ?</div>
+       <div class="button button-calm" ng-click="verifyUsers()" ng-show="isChoosingUsers">How long ?</div>
+       <div class="button button-calm" ng-click="sendSnap()" ng-show="isSelectingTime">Send !</div>
+    </div>
+  </ion-footer-bar>
 </ion-view>
