@@ -81,7 +81,8 @@
         console.log('Options');
     });
 
-    controllers.controller('SendSnapCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $ionicLoading) {
+    controllers.controller('SendSnapCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $ionicLoading, $ionicScrollDelegate) {
+
         $scope.isSnaping = false;
         $scope.isGoingToChooseUsers = false;
         $scope.isChoosingUsers = false;
@@ -98,6 +99,8 @@
             $scope.isSnaping = false;
             $scope.isChoosingUsers = false;
             $scope.isSelectingTime = false;
+            $scope.isGoingToChooseUsers = false;
+
             ToolsService.removeAllChildren(snapHolder);
             self.image = null;
             $scope.time = 7;
@@ -171,6 +174,9 @@
         };
 
         $scope.selectTime = function () {
+            $scope.users = [];
+            $ionicScrollDelegate.scrollTop();
+
             $scope.isGoingToChooseUsers = false;
             $scope.isChoosingUsers = false;
             $scope.isSelectingTime = true;
