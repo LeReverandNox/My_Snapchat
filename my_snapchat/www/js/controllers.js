@@ -94,6 +94,7 @@
 
         this.image = null;
         this.time = 7;
+        this.destinataires = [];
 
         var self = this;
 
@@ -106,6 +107,7 @@
             $scope.time = 7;
             self.time = 7;
             $scope.users = [];
+            self.destinataires = [];
         };
 
         $scope.launchCamera = function () {
@@ -156,6 +158,22 @@
             });
         };
 
+        $scope.verifyUsers = function () {
+            self.destinataires = $scope.users.filter(function (object) {
+                return object.isChecked === true;
+            });
+            if (self.destinataires.length === 0) {
+                $ionicPopup.alert({
+                    title: 'Error !',
+                    template: 'Please choose at least one peep'
+                }).then(function () {
+                    $scope.chooseUsers();
+                });
+            } else {
+                $scope.selectTime();
+            }
+        };
+
         $scope.selectTime = function () {
             $scope.isGoingToChooseUsers = false;
             $scope.isChoosingUsers = false;
@@ -169,8 +187,6 @@
         };
 
         $scope.sendSnap = function () {
-            var destinataires = $scope.users.filter(function (object) {
-                return object.isChecked === true;
             $ionicLoading.show({
                 template: 'Sending...'
             });
