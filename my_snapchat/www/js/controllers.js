@@ -85,7 +85,7 @@
         console.log('Options');
     });
 
-    controllers.controller('SendSnapCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup) {
+    controllers.controller('SendSnapCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $ionicLoading) {
         $scope.isSnaping = false;
         $scope.isGoingToChooseUsers = false;
         $scope.isChoosingUsers = false;
@@ -171,6 +171,8 @@
         $scope.sendSnap = function () {
             var destinataires = $scope.users.filter(function (object) {
                 return object.isChecked === true;
+            $ionicLoading.show({
+                template: 'Sending...'
             });
 
             SnapService.sendSnap(self.time, UserService.credentials, destinataires, self.image, function (data) {
@@ -180,10 +182,12 @@
                         title: 'Error !',
                         template: response.error
                     }).then(function () {
+                        $ionicLoading.hide();
                         $scope.reset();
                         $scope.logout();
                     });
                 } else {
+                    $ionicLoading.hide();
                     $ionicPopup.alert({
                         title: 'Well done !',
                         template: 'Your snap has been shipped!'
