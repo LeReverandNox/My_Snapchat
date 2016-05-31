@@ -61,7 +61,7 @@
         };
     });
 
-    controllers.controller('HomeCtrl', function ($scope, UserService, $location, $ionicHistory) {
+    controllers.controller('HomeCtrl', function ($scope, UserService, $location, $ionicHistory, SnapService) {
         UserService.loadCredentials();
         if (!UserService.credentials) {
             $location.path('/');
@@ -80,6 +80,8 @@
             disableAnimate: true,
             disableBack: true
         });
+
+        SnapService.monitorConnection();
     });
 
     controllers.controller('OptionsCtrl', function () {
@@ -200,7 +202,23 @@
 
             SnapService.sendSnap(self.time, UserService.credentials, self.destinataires, self.image, function (data) {
                 var response = JSON.parse(data.response);
-                if (response.error !== true) {
+                if (response.error === true) {
+                    $ionicLoading.hide();
+                    $ionicPopup.alert({
+                        title: 'Well done !',
+                        template: 'Your snap has been shipped!'
+                    }).then(function () {
+                        $scope.reset();
+                    });
+                } else if (response.error === "maybe") {
+                    $ionicLoading.hide();
+                    $ionicPopup.alert({
+                        title: 'Pending...',
+                        template: 'You\'re are currently offline, your snap will be sent soon !'
+                    }).then(function () {
+                        $scope.reset();
+                    });
+                } else {
                     $ionicPopup.alert({
                         title: 'Error !',
                         template: response.error
@@ -208,14 +226,6 @@
                         $ionicLoading.hide();
                         $scope.reset();
                         $scope.logout();
-                    });
-                } else {
-                    $ionicLoading.hide();
-                    $ionicPopup.alert({
-                        title: 'Well done !',
-                        template: 'Your snap has been shipped!'
-                    }).then(function () {
-                        $scope.reset();
                     });
                 }
             });
