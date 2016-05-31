@@ -137,7 +137,7 @@
 
             options.params = {
                 email: credentials.email,
-                u2: dests.join(','),
+                u2: dests.join(';'),
                 temps: time,
                 token: credentials.token
             };
