@@ -6,7 +6,7 @@
 
     var controllers = angular.module('my_snapchat.controllers', []);
 
-    controllers.controller('IndexCtrl', function (UserService, $location, $scope, KonamiService) {
+    controllers.controller('IndexCtrl', function (UserService, $location, $scope, KonamiService, MiniGameService) {
         UserService.loadCredentials();
         if (UserService.credentials) {
             $location.path('/home/send-snap');
@@ -15,6 +15,9 @@
 
         $scope.konaSwipe = function (direction) {
             KonamiService.build(direction);
+        };
+        $scope.onDrag = function (event) {
+            MiniGameService.moveBoo(event);
         };
 
         $scope.login = function () {
