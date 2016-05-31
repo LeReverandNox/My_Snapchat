@@ -82,6 +82,7 @@
         });
 
         SnapService.monitorConnection();
+        UserService.loadUsers();
     });
 
     controllers.controller('OptionsCtrl', function () {
@@ -136,32 +137,45 @@
             $scope.isGoingToChooseUsers = false;
             $scope.isChoosingUsers = true;
             $scope.isSelectingTime = false;
-            UserService.getUsers(UserService.credentials, function success(response) {
-                if (response.data.error !== true) {
-                    $ionicPopup.alert({
-                        title: 'Error !',
-                        template: response.data.error
-                    }).then(function () {
-                        $scope.reset();
-                        $scope.logout();
-                    });
-                } else {
-                    var users = [];
-                    // DEBUG
-                    users.push({
-                        id: 106,
-                        isChecked: false
-                    });
-                    //
-                    JSON.parse(response.data.data).forEach(function (id) {
+
+            if (SnapService.offline === true && UserService.users !== false) {
+                $scope.users = UserService.users;
+            } else if (SnapService.offline === true) {
+                $ionicPopup.alert({
+                    title: 'You\'re offline !',
+                    template: "Can't fetch the users list..."
+                }).then(function () {
+                    $scope.reset();
+                });
+            } else {
+                UserService.getUsers(UserService.credentials, function success(response) {
+                    if (response.data.error !== true) {
+                        $ionicPopup.alert({
+                            title: 'Error !',
+                            template: response.data.error
+                        }).then(function () {
+                            $scope.reset();
+                            $scope.logout();
+                        });
+                    } else {
+                        var users = [];
+                        // DEBUG
                         users.push({
-                            id: id,
+                            id: 106,
                             isChecked: false
                         });
-                    });
-                    $scope.users = users;
-                }
-            });
+                        //
+                        JSON.parse(response.data.data).forEach(function (id) {
+                            users.push({
+                                id: id,
+                                isChecked: false
+                            });
+                        });
+                        UserService.storeUsers(users);
+                        $scope.users = users;
+                    }
+                });
+            }
         };
 
         $scope.verifyUsers = function () {

@@ -8,6 +8,7 @@
 
     services.service('UserService', function ($http) {
         this.credentials = {};
+        this.users = false;
 
         this.apiUrl = 'http://snapchat.samsung-campus.net/api.php';
 
@@ -42,6 +43,15 @@
             };
             $http.post(this.apiUrl + '?option=toutlemonde', littleCredentials)
                 .then(successCallback);
+        };
+
+        this.storeUsers = function (users) {
+            localStorage.setItem('My_Snapchat_Users', JSON.stringify(users));
+            this.users = users;
+        };
+
+        this.loadUsers = function () {
+            this.users = JSON.parse(localStorage.getItem('My_Snapchat_Users')) || false;
         };
     });
 
