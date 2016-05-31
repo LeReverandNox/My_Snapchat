@@ -9,12 +9,12 @@
     <div class="countdown">
       {{ remaining }}
     </div>
-    <div class="get-snap-holder"></div>
+    <div class="get-snap-holder" on-touch="markAsViewed(snap.id_snap)"></div>
   </div>
 
   <div class="list" ng-show="isListingSnaps">
-      <ion-item collection-repeat="snap in snaps">
-        <p ng-click="viewSnap(snap)">{{ snap.id_sender}}</p>
+      <ion-item collection-repeat="snap in snaps" ng-click="viewSnap(snap)">
+        <p>{{ snap.id_sender}}</p>
     </ion-item>
   </div>
 
