@@ -186,7 +186,7 @@
         };
     });
 
-    services.service('KonamiService', function () {
+    services.service('KonamiService', function (MiniGameService) {
         this.konamiCode = ["U", "U", "D", "D", "L", "R", "L", "R", "B", "A"];
         this.onGoingCode = [];
         this.enabled = false;
@@ -277,12 +277,59 @@
 
         this.disableKonami = function () {
             this.enabled = false;
-            alert("On quitte le konami...");
+            MiniGameService.stop();
+            // alert("On quitte le konami...");
         };
 
         this.enableKonami = function () {
             this.enabled = true;
-            alert("On est en konami !!!!");
+            MiniGameService.init();
+            // alert("On est en konami !!!!");
+        };
+    });
+
+    services.service('MiniGameService', function () {
+        this.enabled = false;
+        this.boo = document.querySelector('.index-boo');
+        this.booJ = $('.index-boo');
+        this.booWidth = 0;
+        this.booHeight = 0;
+
+        this.init = function () {
+            console.log('On lance le minijeu');
+            this.prepareBoo();
+            this.enabled = true;
+        };
+
+        this.prepareBoo = function () {
+            this.booJ.addClass('boo-prepared');
+            this.booWidth = this.booJ.width();
+            this.booHeight = this.booJ.height();
+        };
+
+        this.moveBoo = function (event) {
+            if (this.enabled) {
+                var x = event.gesture.center.pageX - (this.booWidth / 2);
+                var y = event.gesture.center.pageY - (this.booHeight / 2);
+                // console.log((MiniGameService.booWidth / 2));
+                // console.log(event);
+                // console.log(event.target.className);
+                this.booJ.css({
+                    position: 'absolute',
+                    left: x + 'px',
+                    top: y + 'px'
+                });
+            }
+        };
+        this.stop = function () {
+            this.enabled = false;
+            this.booJ.removeClass('boo-prepared');
+            this.booJ.css({
+                position: 'relative',
+                left: 0 + 'px',
+                top: 0 + 'px'
+            });
+            console.log('On arrete le minijeu');
         };
     });
 }());
