@@ -185,4 +185,13 @@
             }
         };
     });
+
+    services.service('KonamiService', function () {
+        this.konamiCode = ["U", "U", "D", "D", "L", "R", "L", "R", "B", "A"];
+        this.onGoingCode = [];
+        this.build = function (direction) {
+            this.onGoingCode.push(direction);
+        };
+        };
+    });
 }());
