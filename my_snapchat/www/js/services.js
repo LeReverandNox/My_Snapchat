@@ -189,9 +189,56 @@
     services.service('KonamiService', function () {
         this.konamiCode = ["U", "U", "D", "D", "L", "R", "L", "R", "B", "A"];
         this.onGoingCode = [];
+        this.enabled = false;
+        this.BA = false;
+        this.loginButton = document.querySelector(".login");
+        this.registerButton = document.querySelector(".register");
+
         this.build = function (direction) {
             this.onGoingCode.push(direction);
+            this.verifKonamiCode();
         };
+
+        this.resetCode = function () {
+            this.onGoingCode = [];
+            this.BA = false;
+            this.loginButton.innerHTML = "Login";
+            this.registerButton.innerHTML = "Register";
+        };
+
+        this.verifKonamiCode = function () {
+            if (this.konamiCode[this.onGoingCode.length - 1] === undefined || this.onGoingCode[this.onGoingCode.length - 1] !== this.konamiCode[this.onGoingCode.length - 1]) {
+                this.resetCode();
+            }
+
+            if (this.onGoingCode.length === 8) {
+                this.BA = true;
+                this.loginButton.innerHTML = "B";
+                this.registerButton.innerHTML = "A";
+            }
+
+            if (this.onGoingCode.length === 10) {
+                this.resetCode();
+                this.disenableKonami();
+            }
+        };
+
+        this.disenableKonami = function () {
+            if (this.enabled) {
+                this.disableKonami();
+            } else {
+                this.enableKonami();
+            }
+        };
+
+        this.disableKonami = function () {
+            this.enabled = false;
+            alert("On quitte le konami...");
+        };
+
+        this.enableKonami = function () {
+            this.enabled = true;
+            alert("On est en konami !!!!");
         };
     });
 }());
