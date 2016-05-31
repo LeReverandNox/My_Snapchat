@@ -305,6 +305,14 @@
         };
 
         $scope.viewSnap = function (snap) {
+            if (SnapService.offline) {
+                $ionicPopup.alert({
+                    title: 'You\'re offline !',
+                    template: 'Can\'t see that snap\' for now !'
+                });
+                return false;
+            }
+
             $scope.isListingSnaps = false;
             var duration = snap.duration * 1000;
             $scope.remaining = snap.duration;
