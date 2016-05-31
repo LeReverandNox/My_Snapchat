@@ -17,6 +17,21 @@
             KonamiService.build(direction);
         };
 
+        $scope.login = function () {
+            if (!KonamiService.BA) {
+                $location.path('/login');
+            } else {
+                KonamiService.build('B');
+            }
+        };
+
+        $scope.register = function () {
+            if (!KonamiService.BA) {
+                $location.path('/register');
+            } else {
+                KonamiService.build('A');
+            }
+        };
     });
 
     controllers.controller('RegiLogCtrl', function ($scope, UserService, $ionicPopup, $location) {
