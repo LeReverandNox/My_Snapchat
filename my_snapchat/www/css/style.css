@@ -83,3 +83,12 @@
     -ms-transform: rotate(90deg);
     transform: rotate(90deg);
 }
+
+.boo-prepared {
+    -webkit-transform: scale(0.4);
+    -moz-transform: scale(0.4);
+    -o-transform: scale(0.4);
+    -ms-transform: scale(0.4);
+    transform: scale(0.4);
+}
+}
