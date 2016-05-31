@@ -1,6 +1,11 @@
 <ion-view hide-nav-bar="true">
       <ion-content class="index-back">
-        <div class="boo-holder">
+        <div class="boo-holder"
+          on-swipe-up="konaSwipe('U')"
+          on-swipe-down="konaSwipe('D')"
+          on-swipe-left="konaSwipe('L')"
+          on-swipe-right="konaSwipe('R')"
+        >
             <img src="img/boo.png" alt="Boo !" />
         </div>
       </ion-content>
