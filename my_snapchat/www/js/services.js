@@ -278,13 +278,13 @@
         this.disableKonami = function () {
             this.enabled = false;
             MiniGameService.stop();
-            // alert("On quitte le konami...");
+            this.resetCode();
         };
 
         this.enableKonami = function () {
             this.enabled = true;
             MiniGameService.init();
-            // alert("On est en konami !!!!");
+            this.registerButton.innerHTML = "Reset";
         };
     });
 
@@ -292,13 +292,27 @@
         this.enabled = false;
         this.boo = document.querySelector('.index-boo');
         this.booJ = $('.index-boo');
+        this.holder = $('.index-back');
         this.booWidth = 0;
         this.booHeight = 0;
+        this.score = 1;
+        this.nyancats = [];
+        this.isLoosed = false;
+        this.perdu = $('<div class="perdu">You loose !</div>');
+
+        var self = this;
 
         this.init = function () {
             console.log('On lance le minijeu');
             this.prepareBoo();
-            this.enabled = true;
+
+            function begin() {
+                self.spawnNyanCats(5);
+                self.launchTimer();
+                self.watchColisions();
+                self.enabled = true;
+            }
+            setTimeout(begin, 2000);
         };
 
         this.prepareBoo = function () {
@@ -311,9 +325,6 @@
             if (this.enabled) {
                 var x = event.gesture.center.pageX - (this.booWidth / 2);
                 var y = event.gesture.center.pageY - (this.booHeight / 2);
-                // console.log((MiniGameService.booWidth / 2));
-                // console.log(event);
-                // console.log(event.target.className);
                 this.booJ.css({
                     position: 'absolute',
                     left: x + 'px',
@@ -329,7 +340,133 @@
                 left: 0 + 'px',
                 top: 0 + 'px'
             });
+            this.deleteAllCats();
+            this.stopTimer();
+            this.deleteTimer();
+            this.perdu.remove();
+            this.isLoosed = false;
             console.log('On arrete le minijeu');
+        };
+
+        this.spawnNyanCats = function (nb) {
+            var i = 0;
+            var div;
+            for (i = 0; i < nb; i += 1) {
+                div = $('<div></div>');
+                div.addClass('nyancats');
+                div.appendTo(this.holder);
+                this.nyancats.push(div);
+                this.animateSprite(div);
+            }
+        };
+
+        this.deleteAllCats = function () {
+            var cats = $('.nyancats');
+            cats.remove();
+        };
+
+        this.animateSprite = function (sprite) {
+            var newPos = this.findNextPos();
+            var oldPos = sprite.offset();
+            var speed = this.computeSpeed([oldPos.top, oldPos.left], newPos);
+
+            if (!this.isLoosed) {
+                sprite.animate({
+                    top: newPos[0],
+                    left: newPos[1]
+                }, speed, function () {
+                    self.animateSprite(sprite);
+                });
+            }
+        };
+
+        this.findNextPos = function () {
+            var h = this.holder.height() - 50;
+            var w = this.holder.width() - 82;
+
+            var x = Math.floor(Math.random() * h);
+            var y = Math.floor(Math.random() * w);
+
+            return [x, y];
+        };
+
+        this.computeSpeed = function (previous, next) {
+            var x = Math.abs(previous[1] - next[1]);
+            var y = Math.abs(previous[0] - next[0]);
+
+            var greatest = x > y
+                ? x
+                : y;
+
+            var coef = 0.1;
+
+            var speed = Math.ceil(greatest / coef);
+
+            return speed;
+        };
+
+        this.launchTimer = function () {
+            var clock = $('<div><div>');
+            clock.html(self.score);
+            clock.addClass('clock');
+            clock.appendTo(this.holder);
+
+            this.timer = setInterval(function () {
+                self.score += 1;
+                clock.html(self.score);
+            }, 1000);
+        };
+
+        this.stopTimer = function () {
+            clearInterval(this.timer);
+        };
+
+        this.deleteTimer = function () {
+            this.score = 1;
+            $('.clock').remove();
+        };
+
+        this.checkColision = function (cat) {
+            function getPositions(elem) {
+                var pos = elem.position();
+                var width = elem.width() / 2;
+                var height = elem.height();
+                return [[pos.left, pos.left + width], [pos.top, pos.top + height]];
+            }
+
+            function comparePositions(p1, p2) {
+                var r1 = p1[0] < p2[0]
+                    ? p1
+                    : p2;
+                var r2 = p1[0] < p2[0]
+                    ? p2
+                    : p1;
+                return r1[1] > r2[0] || r1[0] === r2[0];
+            }
+
+            var pos1 = getPositions(this.booJ);
+            var pos2 = getPositions(cat);
+            return comparePositions(pos1[0], pos2[0]) && comparePositions(pos1[1], pos2[1]);
+        };
+
+        this.watchColisions = function () {
+            this.loop = setInterval(function () {
+                if (!self.isLoosed) {
+                    var i = 0;
+                    for (i = 0; i < self.nyancats.length; i += 1) {
+                        self.isLoosed = self.checkColision(self.nyancats[i]);
+
+                    }
+                } else {
+                    self.loose();
+                }
+            }, 50);
+        };
+
+        this.loose = function () {
+            clearInterval(this.loop);
+            this.stopTimer();
+            this.perdu.appendTo(this.holder);
         };
     });
 }());
