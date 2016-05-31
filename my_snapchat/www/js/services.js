@@ -1,5 +1,5 @@
 /*jslint browser this for */
-/*global angular alert FileTransfer FileUploadOptions */
+/*global angular alert FileTransfer FileUploadOptions $ */
 
 (function () {
     'use strict';
@@ -193,10 +193,54 @@
         this.BA = false;
         this.loginButton = document.querySelector(".login");
         this.registerButton = document.querySelector(".register");
+        this.indexBoo = document.querySelector('.index-boo');
+        this.indexBooJ = $('.index-boo');
+        var self = this;
 
         this.build = function (direction) {
             this.onGoingCode.push(direction);
+            this.rotateBoo(direction);
             this.verifKonamiCode();
+        };
+
+        this.rotateBoo = function (dir) {
+            this.resetBoo();
+
+            switch (dir) {
+            case 'U':
+                this.indexBooJ.addClass('boo-up');
+                break;
+            case 'D':
+                this.indexBooJ.addClass('boo-down');
+                break;
+            case 'L':
+                this.indexBooJ.addClass('boo-left');
+                break;
+            case 'R':
+                this.indexBooJ.addClass('boo-right');
+                break;
+            case 'B':
+                this.indexBooJ.addClass('boo-b');
+                break;
+            case 'A':
+                this.indexBooJ.addClass('boo-a');
+                break;
+            }
+        };
+
+        this.resetBoo = function () {
+            var classes = [
+                'boo-up',
+                'boo-down',
+                'boo-left',
+                'boo-right',
+                'boo-b',
+                'boo-a'
+            ];
+
+            classes.forEach(function (booClass) {
+                self.indexBooJ.removeClass(booClass);
+            });
         };
 
         this.resetCode = function () {
