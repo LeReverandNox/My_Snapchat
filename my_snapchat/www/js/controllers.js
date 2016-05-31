@@ -21,16 +21,18 @@
         };
 
         $scope.login = function () {
-            if (!KonamiService.BA) {
+            if (!KonamiService.BA && !MiniGameService.enabled) {
                 $location.path('/login');
-            } else {
+            } else if (!KonamiService.enabled) {
                 KonamiService.build('B');
             }
         };
 
         $scope.register = function () {
-            if (!KonamiService.BA) {
+            if (!KonamiService.BA && !MiniGameService.enabled) {
                 $location.path('/register');
+            } else if (KonamiService.enabled) {
+                KonamiService.disableKonami();
             } else {
                 KonamiService.build('A');
             }
