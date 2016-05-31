@@ -260,23 +260,32 @@
             self.snaps = [];
             ToolsService.removeAllChildren(snapHolder);
 
-            SnapService.getSnaps(UserService.credentials, function (response) {
-                if (response.data.error !== true) {
-                    $ionicPopup.alert({
-                        title: 'Error !',
-                        template: response.error
-                    }).then(function () {
-                        $scope.logout();
-                    });
-                } else {
-                    JSON.parse(response.data.data).forEach(function (snap) {
-                        self.snaps.push(snap);
-                    });
-                    $scope.snaps = self.snaps;
-                    $scope.isListingSnaps = true;
+            if (SnapService.offline) {
+                $ionicPopup.alert({
+                    title: 'You\'re offline !',
+                    template: 'Can\'t fetch your snap\'s...'
+                }).then(function () {
                     $scope.$broadcast('scroll.refreshComplete');
-                }
-            });
+                });
+            } else {
+                SnapService.getSnaps(UserService.credentials, function (response) {
+                    if (response.data.error !== true) {
+                        $ionicPopup.alert({
+                            title: 'Error !',
+                            template: response.error
+                        }).then(function () {
+                            $scope.logout();
+                        });
+                    } else {
+                        JSON.parse(response.data.data).forEach(function (snap) {
+                            self.snaps.push(snap);
+                        });
+                        $scope.snaps = self.snaps;
+                        $scope.isListingSnaps = true;
+                        $scope.$broadcast('scroll.refreshComplete');
+                    }
+                });
+            }
         };
 
         $scope.markAsViewed = function (id) {
