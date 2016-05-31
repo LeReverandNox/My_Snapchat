@@ -6,12 +6,17 @@
 
     var controllers = angular.module('my_snapchat.controllers', []);
 
-    controllers.controller('IndexCtrl', function (UserService, $location) {
+    controllers.controller('IndexCtrl', function (UserService, $location, $scope, KonamiService) {
         UserService.loadCredentials();
         if (UserService.credentials) {
             $location.path('/home/send-snap');
             return true;
         }
+
+        $scope.konaSwipe = function (direction) {
+            KonamiService.build(direction);
+        };
+
     });
 
     controllers.controller('RegiLogCtrl', function ($scope, UserService, $ionicPopup, $location) {
