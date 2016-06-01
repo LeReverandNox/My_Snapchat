@@ -102,7 +102,6 @@
                 self.toSend = [];
 
                 $q.all(promises).then(function () {
-                    console.log("Toutes les promise sont resolves !!!");
                     alert("All your pending Snap's have been send !");
                 });
             }
@@ -143,7 +142,6 @@
             };
 
             if (self.offline) {
-                console.log("On est horsligne, on stock les snaps");
                 var obj = {
                     image: image,
                     options: options,
@@ -320,7 +318,6 @@
         var self = this;
 
         this.init = function () {
-            console.log('On lance le minijeu');
             this.prepareBoo();
 
             function begin() {
@@ -361,7 +358,6 @@
             this.deleteTimer();
             this.perdu.remove();
             this.isLoosed = false;
-            console.log('On arrete le minijeu');
         };
 
         this.spawnNyanCats = function (nb) {
@@ -488,8 +484,6 @@
         };
 
         this.loose = function () {
-            console.log(this.isLoosed);
-            console.log("LOOSE");
             clearInterval(this.loop);
             this.stopTimer();
             this.perdu.appendTo(this.holder);
