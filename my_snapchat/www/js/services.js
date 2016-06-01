@@ -315,12 +315,12 @@
         this.isLoosed = false;
         this.perdu = $('<div class="perdu">You loose !</div>');
         this.isChecking = false;
-
         var self = this;
 
         this.init = function () {
             this.prepareBoo();
             this.enabled = true;
+            this.tributeToCherbiR();
 
             function begin() {
                 if (self.enabled) {
@@ -329,6 +329,14 @@
                 }
             }
             setTimeout(begin, 2000);
+        };
+
+        this.tributeToCherbiR = function () {
+            var tribute = $('<div class="tribute">Original game idea by<br />cherbi_r <3</div>');
+            tribute.appendTo(this.holder);
+            setTimeout(function () {
+                tribute.remove();
+            }, 2000);
         };
 
         this.prepareBoo = function () {
