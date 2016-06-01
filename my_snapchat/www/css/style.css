@@ -119,3 +119,12 @@
     transform: translate(-50%, -6%);
     font-size: 2em;
 }
+
+.bounce {
+     animation: bounce 0.30s ease 2 alternate;
+}
+
+@keyframes bounce{
+     from {transform: scale(1);}
+     to   {transform: scale(1.25);}
+}

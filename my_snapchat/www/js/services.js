@@ -195,6 +195,7 @@
         this.registerButton = document.querySelector(".register");
         this.indexBoo = document.querySelector('.index-boo');
         this.indexBooJ = $('.index-boo');
+        this.isBouncing = false;
         var self = this;
 
         this.build = function (direction) {
@@ -225,6 +226,17 @@
             case 'A':
                 this.indexBooJ.addClass('boo-a');
                 break;
+            }
+        };
+
+        this.bounceBoo = function () {
+            if (!this.isBouncing && !this.enabled) {
+                this.isBouncing = true;
+                this.indexBooJ.addClass('bounce');
+                this.indexBooJ.one('animationend', function () {
+                    self.indexBooJ.removeClass('bounce');
+                    self.isBouncing = false;
+                });
             }
         };
 
