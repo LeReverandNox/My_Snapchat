@@ -311,6 +311,7 @@
         this.nyancats = [];
         this.isLoosed = false;
         this.perdu = $('<div class="perdu">You loose !</div>');
+        this.isChecking = false;
 
         var self = this;
 
@@ -321,7 +322,6 @@
             function begin() {
                 self.spawnNyanCats(5);
                 self.launchTimer();
-                self.watchColisions();
                 self.enabled = true;
             }
             setTimeout(begin, 2000);
@@ -386,8 +386,14 @@
                 sprite.animate({
                     top: newPos[0],
                     left: newPos[1]
-                }, speed, function () {
-                    self.animateSprite(sprite);
+                }, {
+                    duration: speed,
+                    progress: function () {
+                        self.watchColisions(sprite);
+                    },
+                    complete: function () {
+                        self.animateSprite(sprite);
+                    }
                 });
             }
         };
@@ -441,8 +447,12 @@
         this.checkColision = function (cat) {
             function getPositions(elem) {
                 var pos = elem.position();
-                var width = elem.width() / 2;
+                var width = elem.width();
                 var height = elem.height();
+                if (elem.selector === ".index-boo") {
+                    width *= 0.4;
+                    height *= 0.4;
+                }
                 return [[pos.left, pos.left + width], [pos.top, pos.top + height]];
             }
 
@@ -461,21 +471,21 @@
             return comparePositions(pos1[0], pos2[0]) && comparePositions(pos1[1], pos2[1]);
         };
 
-        this.watchColisions = function () {
-            this.loop = setInterval(function () {
+        this.watchColisions = function (cat) {
+            if (!this.isChecking) {
                 if (!self.isLoosed) {
-                    var i = 0;
-                    for (i = 0; i < self.nyancats.length; i += 1) {
-                        self.isLoosed = self.checkColision(self.nyancats[i]);
-
-                    }
+                    this.isChecking = true;
+                    self.isLoosed = self.checkColision(cat);
                 } else {
                     self.loose();
                 }
-            }, 50);
+                this.isChecking = false;
+            }
         };
 
         this.loose = function () {
+            console.log(this.isLoosed);
+            console.log("LOOSE");
             clearInterval(this.loop);
             this.stopTimer();
             this.perdu.appendTo(this.holder);
