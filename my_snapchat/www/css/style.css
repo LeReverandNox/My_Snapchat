@@ -98,6 +98,8 @@
     width: 82px;
     height: 50px;
     background-image: url('../img/nyancat.png');
+    top: 0;
+    left: 0;
 }
 
 .clock {
