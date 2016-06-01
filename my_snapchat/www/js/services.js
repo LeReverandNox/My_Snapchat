@@ -196,6 +196,7 @@
         this.indexBoo = document.querySelector('.index-boo');
         this.indexBooJ = $('.index-boo');
         this.isBouncing = false;
+        this.konamiMusic = new Audio('sound/game.mp3');
         var self = this;
 
         this.build = function (direction) {
@@ -289,12 +290,15 @@
 
         this.disableKonami = function () {
             this.enabled = false;
+            this.konamiMusic.pause();
+            this.konamiMusic.currentTime = 0;
             MiniGameService.stop();
             this.resetCode();
         };
 
         this.enableKonami = function () {
             this.enabled = true;
+            this.konamiMusic.play();
             MiniGameService.init();
             this.registerButton.innerHTML = "Reset";
         };
