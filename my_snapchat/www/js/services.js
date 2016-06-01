@@ -319,11 +319,13 @@
 
         this.init = function () {
             this.prepareBoo();
+            this.enabled = true;
 
             function begin() {
-                self.spawnNyanCats(5);
-                self.launchTimer();
-                self.enabled = true;
+                if (self.enabled) {
+                    self.spawnNyanCats(5);
+                    self.launchTimer();
+                }
             }
             setTimeout(begin, 2000);
         };
