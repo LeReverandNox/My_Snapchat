@@ -19,6 +19,9 @@
         $scope.onDrag = function (event) {
             MiniGameService.moveBoo(event);
         };
+        $scope.onDoubleTouch = function () {
+            KonamiService.bounceBoo();
+        };
 
         $scope.login = function () {
             if (!KonamiService.BA && !MiniGameService.enabled) {
