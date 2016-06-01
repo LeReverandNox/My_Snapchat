@@ -399,7 +399,7 @@
                     left: newPos[1]
                 }, {
                     duration: speed,
-                    progress: function () {
+                    step: function () {
                         self.watchColisions(sprite);
                     },
                     complete: function () {
