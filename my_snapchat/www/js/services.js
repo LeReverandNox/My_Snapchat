@@ -296,6 +296,7 @@
 
         this.enableKonami = function () {
             this.enabled = true;
+            this.konamiMusic.loop = true;
             this.konamiMusic.play();
             MiniGameService.init();
             this.registerButton.innerHTML = "Reset";
