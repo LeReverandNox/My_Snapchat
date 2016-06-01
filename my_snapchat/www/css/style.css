@@ -130,3 +130,12 @@
      from {transform: scale(1);}
      to   {transform: scale(1.25);}
 }
+
+.tribute {
+    position: absolute;
+    top: 15%;
+    font-size: 2em;
+    width: 100%;
+    text-align: center;
+    line-height: 1.5em;
+}
