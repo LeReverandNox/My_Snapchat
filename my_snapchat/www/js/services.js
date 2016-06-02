@@ -523,6 +523,14 @@
             self.showVideo();
         };
 
+        this.switchSource = function () {
+            var index = self.sources.indexOf(self.videoSource);
+            if (index === -1 || index === 1) {
+                this.showVideo(self.sources[0]);
+            } else {
+                this.showVideo(self.sources[1]);
+            }
+        };
 
         this.showVideo = function (videoSource) {
             this.ready = false;
