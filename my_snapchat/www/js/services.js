@@ -514,5 +514,12 @@
         this.canvas = document.createElement('canvas');
         var self = this;
 
+        this.init = function (successCallback, errorCallback) {
+            if (MediaStreamTrack !== 'undefined' && MediaStreamTrack.getSources !== 'undefined') {
+                MediaStreamTrack.getSources(this.gotSources);
+                self.successCallback = successCallback;
+                self.errorCallback = errorCallback;
+            }
+        };
     });
 }());
