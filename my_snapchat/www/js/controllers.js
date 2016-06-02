@@ -175,21 +175,36 @@
             self.destinataires = [];
         };
 
-        $scope.launchCamera = function () {
-            SnapService.takePicture(function (data) {
-                self.image = data;
-                ToolsService.removeAllChildren(snapHolder);
-                var img = new Image();
-                img.src = data;
-                img.className += 'send-snap-img';
-                img.onload = function () {
-                    snapHolder.appendChild(img);
-                    $scope.isSnaping = true;
-                    $scope.isGoingToChooseUsers = true;
-                    $scope.$apply();
-                };
-            });
+        $scope.takePhoto = function () {
+            if (!PreviewService.enabled) {
+                self.launchCamera();
+            } else {
+                self.takePictureFromPreview();
+            }
         };
+
+        this.takePictureFromPreview = function () {
+            PreviewService.takePicture(this.proceedImage);
+        };
+
+        this.launchCamera = function () {
+            SnapService.takePicture(this.proceedImage);
+        };
+
+        this.proceedImage = function (data) {
+            self.image = data;
+            ToolsService.removeAllChildren(snapHolder);
+            var img = new Image();
+            img.src = data;
+            img.className += 'send-snap-img';
+            img.onload = function () {
+                snapHolder.appendChild(img);
+                $scope.isSnaping = true;
+                $scope.isGoingToChooseUsers = true;
+                $scope.$apply();
+            };
+        };
+
 
         $scope.chooseUsers = function () {
             $scope.isGoingToChooseUsers = false;
