@@ -141,6 +141,7 @@
                 PreviewService.videoWidth = self.videoPlayer.videoWidth;
                 PreviewService.videoHeight = self.videoPlayer.videoHeight;
                 PreviewService.ready = true;
+                $ionicLoading.hide();
                 self.videoPlayer.removeEventListener('playing', this);
             };
 

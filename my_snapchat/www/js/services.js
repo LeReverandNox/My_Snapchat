@@ -501,7 +501,7 @@
         };
     });
 
-    services.service('PreviewService', function () {
+    services.service('PreviewService', function ($ionicLoading) {
         this.sources = [];
         this.videoSource = null;
         this.successCallback = null;
@@ -534,6 +534,10 @@
 
         this.showVideo = function (videoSource) {
             this.ready = false;
+            $ionicLoading.show({
+                template: 'Loading camera...'
+            });
+
             if (videoSource === undefined) {
                 videoSource = self.sources[0];
             }
