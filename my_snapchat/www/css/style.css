@@ -138,6 +138,11 @@
     width: 100%;
     text-align: center;
     line-height: 1.5em;
+}
+
+.videoo {
+    width: 100%;
+}
 
 .switch-source {
     position: absolute;
