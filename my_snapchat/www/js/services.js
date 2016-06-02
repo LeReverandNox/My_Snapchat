@@ -513,6 +513,7 @@
         this.ready = false;
         this.video = document.querySelector('.videoo');
         this.canvas = document.createElement('canvas');
+        this.context = this.canvas.getContext('2d');
         var self = this;
 
         this.gotSources = function (sourceInfos) {
@@ -568,8 +569,14 @@
                 this.canvas.setAttribute('height', this.videoHeight);
                 this.canvas.width = this.videoWidth;
                 this.canvas.height = this.videoHeight;
-                this.canvas.getContext('2d').clearRect(0, 0, this.videoWidth, this.videoHeight);
-                this.canvas.getContext('2d').drawImage(this.video, 0, 0, this.videoWidth, this.videoHeight);
+                this.context.clearRect(0, 0, this.videoWidth, this.videoHeight);
+
+                if (this.currSource === 0) {
+                    this.context.translate(this.videoWidth, 0);
+                    this.context.scale(-1, 1);
+                }
+
+                this.context.drawImage(this.video, 0, 0, this.videoWidth, this.videoHeight);
                 var data = this.canvas.toDataURL('image/png');
                 callback(data);
             }
