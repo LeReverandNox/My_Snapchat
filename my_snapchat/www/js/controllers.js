@@ -233,10 +233,10 @@
                     } else {
                         var users = [];
                         // DEBUG
-                        users.push({
-                            id: 106,
-                            isChecked: false
-                        });
+                        // users.push({
+                        //     id: 106,
+                        //     isChecked: false
+                        // });
                         //
                         JSON.parse(response.data.data).forEach(function (id) {
                             users.push({
