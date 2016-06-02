@@ -1,5 +1,5 @@
 /*jslint browser this for */
-/*global angular alert window */
+/*global angular alert window $ */
 
 (function () {
     'use strict';
@@ -134,6 +134,12 @@
 
 
         this.previewSuccessCallback = function (localMediaStream) {
+            if (PreviewService.currSource === 0) {
+                $(self.videoPlayer).addClass('mirror');
+            } else {
+                $(self.videoPlayer).removeClass('mirror');
+            }
+
             self.videoPlayer.src = window.URL.createObjectURL(localMediaStream);
             self.videoPlayer.play();
 

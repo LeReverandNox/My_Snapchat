@@ -504,6 +504,7 @@
     services.service('PreviewService', function ($ionicLoading) {
         this.sources = [];
         this.videoSource = null;
+        this.currSource = 0;
         this.successCallback = null;
         this.errorCallback = null;
         this.enabled = false;
@@ -527,8 +528,10 @@
             var index = self.sources.indexOf(self.videoSource);
             if (index === -1 || index === 1) {
                 this.showVideo(self.sources[0]);
+                this.currSource = 0;
             } else {
                 this.showVideo(self.sources[1]);
+                this.currSource = 1;
             }
         };
 
