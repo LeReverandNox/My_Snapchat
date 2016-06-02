@@ -138,4 +138,12 @@
     width: 100%;
     text-align: center;
     line-height: 1.5em;
+
+.switch-source {
+    position: absolute;
+    width: 100px;
+    height: 70px;
+    background-image: url('../img/switch-camera.png');
+    top: 5%;
+    right: 5%;
 }
