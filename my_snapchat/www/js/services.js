@@ -523,6 +523,30 @@
             self.showVideo();
         };
 
+
+        this.showVideo = function (videoSource) {
+            this.ready = false;
+            if (videoSource === undefined) {
+                videoSource = self.sources[0];
+            }
+            self.videoSource = videoSource;
+
+            navigator.getUserMedia = (navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+
+            if (navigator.getUserMedia) {
+                var constraints = {
+                    video: {
+                        optional: [{
+                            sourceId: self.videoSource
+                        }]
+                    }
+                };
+                navigator.getUserMedia(constraints, self.successCallback, self.errorCallback);
+            } else {
+                console.log("getUserMedia not supported");
+            }
+        };
+        };
         this.init = function (successCallback, errorCallback) {
             if (MediaStreamTrack !== 'undefined' && MediaStreamTrack.getSources !== 'undefined') {
                 MediaStreamTrack.getSources(this.gotSources);
