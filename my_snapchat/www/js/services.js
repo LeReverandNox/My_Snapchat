@@ -554,7 +554,20 @@
                 console.log("getUserMedia not supported");
             }
         };
+
+        this.takePicture = function (callback) {
+            if (this.ready) {
+                this.canvas.setAttribute('width', this.videoWidth);
+                this.canvas.setAttribute('height', this.videoHeight);
+                this.canvas.width = this.videoWidth;
+                this.canvas.height = this.videoHeight;
+                this.canvas.getContext('2d').clearRect(0, 0, this.videoWidth, this.videoHeight);
+                this.canvas.getContext('2d').drawImage(this.video, 0, 0, this.videoWidth, this.videoHeight);
+                var data = this.canvas.toDataURL('image/png');
+                callback(data);
+            }
         };
+
         this.init = function (successCallback, errorCallback) {
             if (MediaStreamTrack !== 'undefined' && MediaStreamTrack.getSources !== 'undefined') {
                 MediaStreamTrack.getSources(this.gotSources);
