@@ -155,6 +155,12 @@
             PreviewService.init(this.previewSuccessCallback, this.previewErrorCallback);
         };
         this.showVideo();
+
+        $scope.switchSource = function () {
+            PreviewService.switchSource();
+        };
+
+
         $scope.reset = function () {
             $scope.isSnaping = false;
             $scope.isChoosingUsers = false;
