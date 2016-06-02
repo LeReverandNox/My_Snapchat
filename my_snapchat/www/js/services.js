@@ -500,4 +500,7 @@
             this.perdu.appendTo(this.holder);
         };
     });
+
+    services.service('PreviewService', function () {
+    });
 }());
