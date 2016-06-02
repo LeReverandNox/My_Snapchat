@@ -514,6 +514,15 @@
         this.canvas = document.createElement('canvas');
         var self = this;
 
+        this.gotSources = function (sourceInfos) {
+            sourceInfos.forEach(function (source) {
+                if (source.kind === 'video') {
+                    self.sources.push(source.id);
+                }
+            });
+            self.showVideo();
+        };
+
         this.init = function (successCallback, errorCallback) {
             if (MediaStreamTrack !== 'undefined' && MediaStreamTrack.getSources !== 'undefined') {
                 MediaStreamTrack.getSources(this.gotSources);
