@@ -502,5 +502,17 @@
     });
 
     services.service('PreviewService', function () {
+        this.sources = [];
+        this.videoSource = null;
+        this.successCallback = null;
+        this.errorCallback = null;
+        this.enabled = false;
+        this.videoWidth = 0;
+        this.videoHeight = 0;
+        this.ready = false;
+        this.video = document.querySelector('.videoo');
+        this.canvas = document.createElement('canvas');
+        var self = this;
+
     });
 }());
