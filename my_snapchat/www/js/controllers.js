@@ -1,5 +1,5 @@
 /*jslint browser this for */
-/*global angular alert */
+/*global angular alert window */
 
 (function () {
     'use strict';
@@ -133,6 +133,28 @@
         var self = this;
 
 
+        this.previewSuccessCallback = function (localMediaStream) {
+            self.videoPlayer.src = window.URL.createObjectURL(localMediaStream);
+            self.videoPlayer.play();
+
+            var getVideoSize = function () {
+                PreviewService.videoWidth = self.videoPlayer.videoWidth;
+                PreviewService.videoHeight = self.videoPlayer.videoHeight;
+                PreviewService.ready = true;
+                self.videoPlayer.removeEventListener('playing', this);
+            };
+
+            self.videoPlayer.addEventListener('playing', getVideoSize);
+            PreviewService.enabled = true;
+        };
+        this.previewErrorCallback = function (err) {
+            console.log("The following error occured: ", err);
+        };
+
+        this.showVideo = function () {
+            PreviewService.init(this.previewSuccessCallback, this.previewErrorCallback);
+        };
+        this.showVideo();
         $scope.reset = function () {
             $scope.isSnaping = false;
             $scope.isChoosingUsers = false;
