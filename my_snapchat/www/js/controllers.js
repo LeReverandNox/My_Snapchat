@@ -117,7 +117,7 @@
         console.log('Options');
     });
 
-    controllers.controller('SendSnapCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $ionicLoading, $ionicScrollDelegate) {
+    controllers.controller('SendSnapCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $ionicLoading, $ionicScrollDelegate, PreviewService) {
 
         $scope.isSnaping = false;
         $scope.isGoingToChooseUsers = false;
@@ -128,8 +128,10 @@
         this.image = null;
         this.time = 7;
         this.destinataires = [];
+        this.videoPlayer = document.querySelector('.videoo');
 
         var self = this;
+
 
         $scope.reset = function () {
             $scope.isSnaping = false;
