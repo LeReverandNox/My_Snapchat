@@ -120,7 +120,6 @@
                         snaps.push(snap);
                     });
                     $scope.nbSnaps = snaps.length;
-                    $scope.$broadcast('scroll.refreshComplete');
 
                     if (callback) {
                         callback(snaps);
@@ -194,7 +193,6 @@
             PreviewService.switchSource();
         };
 
-
         $scope.reset = function () {
             $scope.isSnaping = false;
             $scope.isChoosingUsers = false;
@@ -238,7 +236,6 @@
                 $scope.$apply();
             };
         };
-
 
         $scope.chooseUsers = function () {
             $scope.isGoingToChooseUsers = false;
@@ -366,6 +363,7 @@
             ToolsService.removeAllChildren(snapHolder);
             $scope.getSnaps(function (snaps) {
                 $scope.snaps = snaps;
+                $scope.$broadcast('scroll.refreshComplete');
                 $scope.isListingSnaps = true;
             });
         };
