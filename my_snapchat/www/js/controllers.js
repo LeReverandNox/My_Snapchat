@@ -89,7 +89,7 @@
         };
     });
 
-    controllers.controller('HomeCtrl', function ($scope, UserService, $location, $ionicHistory, SnapService) {
+    controllers.controller('HomeCtrl', function ($scope, UserService, $location, $ionicHistory, SnapService, $ionicPopup) {
         UserService.loadCredentials();
         if (!UserService.credentials) {
             $location.path('/');
@@ -104,6 +104,31 @@
             return true;
         };
 
+        $scope.nbSnaps = null;
+        $scope.getSnaps = function (callback) {
+            SnapService.getSnaps(UserService.credentials, function (response) {
+                if (response.data.error !== true) {
+                    $ionicPopup.alert({
+                        title: 'Error !',
+                        template: response.error
+                    }).then(function () {
+                        $scope.logout();
+                    });
+                } else {
+                    var snaps = [];
+                    JSON.parse(response.data.data).forEach(function (snap) {
+                        snaps.push(snap);
+                    });
+                    $scope.nbSnaps = snaps.length;
+                    $scope.$broadcast('scroll.refreshComplete');
+
+                    if (callback) {
+                        callback(snaps);
+                    }
+                }
+            });
+        };
+
         $ionicHistory.nextViewOptions({
             disableAnimate: true,
             disableBack: true
@@ -113,8 +138,8 @@
         UserService.loadUsers();
     });
 
-    controllers.controller('OptionsCtrl', function () {
-        console.log('Options');
+    controllers.controller('OptionsCtrl', function ($scope) {
+        $scope.getSnaps();
     });
 
     controllers.controller('SendSnapCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $ionicLoading, $ionicScrollDelegate, PreviewService) {
@@ -124,6 +149,8 @@
         $scope.isChoosingUsers = false;
         $scope.isSelectingTime = false;
         var snapHolder = document.querySelector('.send-snap-holder');
+
+        $scope.getSnaps();
 
         this.image = null;
         this.time = 7;
@@ -327,45 +354,20 @@
     });
 
     controllers.controller('GetSnapsCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $interval, $ionicLoading) {
-        this.snaps = [];
-        $scope.snaps = [];
         $scope.isListingSnaps = false;
         $scope.isViewingSnap = false;
         $scope.remaining = 0;
+        $scope.snaps = [];
         var self = this;
         var snapHolder = document.querySelector('.get-snap-holder');
 
         $scope.init = function () {
             $scope.isViewingSnap = false;
-            self.snaps = [];
             ToolsService.removeAllChildren(snapHolder);
-
-            if (SnapService.offline) {
-                $ionicPopup.alert({
-                    title: 'You\'re offline !',
-                    template: 'Can\'t fetch your snap\'s...'
-                }).then(function () {
-                    $scope.$broadcast('scroll.refreshComplete');
-                });
-            } else {
-                SnapService.getSnaps(UserService.credentials, function (response) {
-                    if (response.data.error !== true) {
-                        $ionicPopup.alert({
-                            title: 'Error !',
-                            template: response.error
-                        }).then(function () {
-                            $scope.logout();
-                        });
-                    } else {
-                        JSON.parse(response.data.data).forEach(function (snap) {
-                            self.snaps.push(snap);
-                        });
-                        $scope.snaps = self.snaps;
-                        $scope.isListingSnaps = true;
-                        $scope.$broadcast('scroll.refreshComplete');
-                    }
-                });
-            }
+            $scope.getSnaps(function (snaps) {
+                $scope.snaps = snaps;
+                $scope.isListingSnaps = true;
+            });
         };
 
         $scope.markAsViewed = function (id) {
