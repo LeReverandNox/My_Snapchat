@@ -85,11 +85,11 @@
 }
 
 .boo-prepared {
-    -webkit-transform: scale(0.4);
-    -moz-transform: scale(0.4);
-    -o-transform: scale(0.4);
-    -ms-transform: scale(0.4);
-    transform: scale(0.4);
+    -webkit-transform: scale(0.3);
+    -moz-transform: scale(0.3);
+    -o-transform: scale(0.3);
+    -ms-transform: scale(0.3);
+    transform: scale(0.3);
     z-index: 99;
 }
 

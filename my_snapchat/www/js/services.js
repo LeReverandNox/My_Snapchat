@@ -461,8 +461,8 @@
                 var width = elem.width();
                 var height = elem.height();
                 if (elem.selector === ".index-boo") {
-                    width *= 0.4;
-                    height *= 0.4;
+                    width *= 0.3;
+                    height *= 0.3;
                 }
                 return [[pos.left, pos.left + width], [pos.top, pos.top + height]];
             }
