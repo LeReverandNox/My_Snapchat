@@ -450,7 +450,7 @@
                 ? x
                 : y;
 
-            var coef = 0.1;
+            var coef = 0.75;
 
             var speed = Math.ceil(greatest / coef);
 
