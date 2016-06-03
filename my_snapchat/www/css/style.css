@@ -185,3 +185,15 @@
     filter: FlipH;
     -ms-filter: "FlipH";
 }
+
+.snap-counter {
+    border-radius: 25%;
+    border: 5px solid red;
+    background-color: red;
+    color: white;
+    font-size: 1.5em;
+    position: absolute;
+    font-weight: bold;
+    bottom: 20px;
+    box-shadow: 2px;
+}
