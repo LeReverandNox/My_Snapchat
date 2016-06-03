@@ -534,7 +534,6 @@
         this.videoWidth = 0;
         this.videoHeight = 0;
         this.ready = false;
-        this.video = document.querySelector('.videoo');
         this.canvas = document.createElement('canvas');
         this.context = this.canvas.getContext('2d');
         var self = this;
@@ -588,6 +587,7 @@
 
         this.takePicture = function (callback) {
             if (this.ready) {
+                this.video = document.querySelector('.videoo');
                 this.canvas.setAttribute('width', this.videoWidth);
                 this.canvas.setAttribute('height', this.videoHeight);
                 this.canvas.width = this.videoWidth;
