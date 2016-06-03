@@ -328,6 +328,8 @@
         this.isLoosed = false;
         this.perdu = $('<div class="perdu">You loose !</div>');
         this.isChecking = false;
+        this.autoSpawnInterval = null;
+        this.autoSpawnDelay = 10000;
         var self = this;
 
         this.init = function () {
@@ -338,10 +340,17 @@
             function begin() {
                 if (self.enabled) {
                     self.spawnNyanCats(5);
+                    self.autoSpawn();
                     self.launchTimer();
                 }
             }
             setTimeout(begin, 2000);
+        };
+
+        this.autoSpawn = function () {
+            this.autoSpawnInterval = setInterval(function () {
+                self.spawnNyanCats(1);
+            }, this.autoSpawnDelay);
         };
 
         this.tributeToCherbiR = function () {
@@ -378,6 +387,7 @@
                 top: 0 + 'px'
             });
             this.deleteAllCats();
+            clearInterval(this.autoSpawnInterval);
             this.stopTimer();
             this.deleteTimer();
             this.perdu.remove();
