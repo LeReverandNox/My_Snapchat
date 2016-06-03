@@ -327,6 +327,7 @@
         this.score = 1;
         this.nyancats = [];
         this.isLoosed = false;
+        this.hasLoosed = false;
         this.perdu = $('<div class="perdu">You loose !</div>');
         this.isChecking = false;
         this.autoSpawnInterval = null;
@@ -343,6 +344,7 @@
             this.prepareBoo();
             this.enabled = true;
             this.tributeToCherbiR();
+            this.hasLoosed = false;
 
             function begin() {
                 if (self.enabled) {
@@ -422,7 +424,6 @@
             var newPos = this.findNextPos();
             var oldPos = sprite.offset();
             var speed = this.computeSpeed([oldPos.top, oldPos.left], newPos);
-
             if (!this.isLoosed) {
                 sprite.animate({
                     top: newPos[0],
@@ -430,7 +431,9 @@
                 }, {
                     duration: speed,
                     step: function () {
-                        self.watchColisions(sprite);
+                        if (!this.hadLoosed) {
+                            self.watchColisions(sprite);
+                        }
                     },
                     complete: function () {
                         self.animateSprite(sprite);
@@ -513,7 +516,7 @@
         };
 
         this.watchColisions = function (cat) {
-            if (!this.isChecking) {
+            if (!this.isChecking && !this.hasLoosed) {
                 if (!self.isLoosed) {
                     this.isChecking = true;
                     self.isLoosed = self.checkColision(cat);
@@ -526,6 +529,7 @@
 
         this.loose = function () {
             console.log("PERDU");
+            this.hasLoosed = true;
             clearInterval(this.autoSpawnInterval);
             this.stopTimer();
             this.perdu.appendTo(this.holder);
