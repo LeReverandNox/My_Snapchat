@@ -2,7 +2,8 @@
   <ion-content>
     <ion-refresher
     pulling-text="Refresh..."
-    on-refresh="init()" ng-hide="isViewingSnap">
+    on-refresh="init()" ng-hide="isViewingSnap"
+    ng-if="!isViewingSnap">
   </ion-refresher>
 
   <div ng-show="isViewingSnap">
