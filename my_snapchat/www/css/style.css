@@ -122,11 +122,34 @@
     font-size: 2em;
 }
 
-.bounce {
-     animation: bounce 0.30s ease 2 alternate;
+.bounce-down{
+     animation: bounce-down 0.30s ease 2 alternate;
+}
+@keyframes bounce-down{
+     from {transform: scale(1) rotate(90deg);}
+     to   {transform: scale(1.25) rotate(90deg);}
 }
 
-@keyframes bounce{
+.bounce-up{
+     animation: bounce-up 0.30s ease 2 alternate;
+}
+@keyframes bounce-up{
+     from {transform: scale(1) rotate(-90deg);}
+     to   {transform: scale(1.25) rotate(-90deg);}
+}
+
+.bounce-left{
+     animation: bounce-left 0.30s ease 2 alternate;
+}
+@keyframes bounce-left{
+     from {transform: scaleX(-1) scaleY(1);}
+     to   {transform: scaleX(-1.25) scaleY(1.25);}
+}
+
+.bounce-right{
+     animation: bounce-right 0.30s ease 2 alternate;
+}
+@keyframes bounce-right{
      from {transform: scale(1);}
      to   {transform: scale(1.25);}
 }

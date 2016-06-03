@@ -231,9 +231,22 @@
         this.bounceBoo = function () {
             if (!this.isBouncing && !this.enabled) {
                 this.isBouncing = true;
-                this.indexBooJ.addClass('bounce');
+
+                if (this.indexBooJ.hasClass('boo-up')) {
+                    this.indexBooJ.addClass('bounce-up');
+                } else if (this.indexBooJ.hasClass('boo-down')) {
+                    this.indexBooJ.addClass('bounce-down');
+                } else if (this.indexBooJ.hasClass('boo-left')) {
+                    this.indexBooJ.addClass('bounce-left');
+                } else {
+                    this.indexBooJ.addClass('bounce-right');
+                }
+
                 this.indexBooJ.one('animationend', function () {
-                    self.indexBooJ.removeClass('bounce');
+                    self.indexBooJ.removeClass('bounce-up');
+                    self.indexBooJ.removeClass('bounce-down');
+                    self.indexBooJ.removeClass('bounce-left');
+                    self.indexBooJ.removeClass('bounce-right');
                     self.isBouncing = false;
                 });
             }
