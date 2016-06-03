@@ -19,4 +19,12 @@
             return number;
         };
     });
+
+    filters.filter('countSnaps', function () {
+        return function (nb) {
+            if (nb > 0) {
+                return '<span class="snap-counter">' + nb + '</span>';
+            }
+        };
+    });
 }());
