@@ -518,7 +518,7 @@
         };
 
         this.loose = function () {
-            clearInterval(this.loop);
+            clearInterval(this.autoSpawnInterval);
             this.stopTimer();
             this.perdu.appendTo(this.holder);
         };
