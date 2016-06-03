@@ -13,6 +13,8 @@
             return true;
         }
 
+        KonamiService.init();
+
         $scope.konaSwipe = function (direction) {
             KonamiService.build(direction);
         };

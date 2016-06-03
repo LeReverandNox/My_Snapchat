@@ -189,13 +189,17 @@
         this.onGoingCode = [];
         this.enabled = false;
         this.BA = false;
-        this.loginButton = document.querySelector(".login");
-        this.registerButton = document.querySelector(".register");
-        this.indexBoo = document.querySelector('.index-boo');
-        this.indexBooJ = $('.index-boo');
         this.isBouncing = false;
         this.konamiMusic = new Audio('sound/game.mp3');
         var self = this;
+
+        this.init = function () {
+            this.loginButton = document.querySelector(".login");
+            this.registerButton = document.querySelector(".register");
+            this.indexBoo = document.querySelector('.index-boo');
+            this.indexBooJ = $('.index-boo');
+            MiniGameService.init();
+        };
 
         this.build = function (direction) {
             this.onGoingCode.push(direction);
@@ -311,16 +315,13 @@
             this.enabled = true;
             this.konamiMusic.loop = true;
             this.konamiMusic.play();
-            MiniGameService.init();
+            MiniGameService.start();
             this.registerButton.innerHTML = "Reset";
         };
     });
 
     services.service('MiniGameService', function () {
         this.enabled = false;
-        this.boo = document.querySelector('.index-boo');
-        this.booJ = $('.index-boo');
-        this.holder = $('.index-back');
         this.booWidth = 0;
         this.booHeight = 0;
         this.score = 1;
@@ -333,6 +334,12 @@
         var self = this;
 
         this.init = function () {
+            this.boo = document.querySelector('.index-boo');
+            this.booJ = $('.index-boo');
+            this.holder = $('.index-back');
+        };
+
+        this.start = function () {
             this.prepareBoo();
             this.enabled = true;
             this.tributeToCherbiR();
@@ -518,6 +525,7 @@
         };
 
         this.loose = function () {
+            console.log("PERDU");
             clearInterval(this.autoSpawnInterval);
             this.stopTimer();
             this.perdu.appendTo(this.holder);
