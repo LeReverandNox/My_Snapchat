@@ -40,13 +40,13 @@
                 controller: 'RegiLogCtrl'
             })
             .state('home', {
-                cache: false,
                 url: '/home',
                 abstract: true,
                 templateUrl: 'partials/home.html',
                 controller: 'HomeCtrl'
             })
             .state('home.options', {
+                cache: false,
                 url: '/options',
                 views: {
                     'home-options': {
@@ -56,6 +56,7 @@
                 }
             })
             .state('home.send-snap', {
+                cache: false,
                 url: '/send-snap',
                 views: {
                     'home-send-snap': {
