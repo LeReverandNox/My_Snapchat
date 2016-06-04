@@ -346,7 +346,7 @@
         };
     });
 
-    controllers.controller('GetSnapsCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $interval, $ionicLoading) {
+    controllers.controller('GetSnapsCtrl', function ($scope, SnapService, ToolsService, UserService, $ionicPopup, $interval, $ionicLoading, $rootScope) {
         $scope.isListingSnaps = false;
         $scope.isViewingSnap = false;
         $scope.remaining = 0;
@@ -355,6 +355,7 @@
         var snapHolder = document.querySelector('.get-snap-holder');
 
         $scope.init = function () {
+            $rootScope.hideTabs = '';
             $scope.isViewingSnap = false;
             ToolsService.removeAllChildren(snapHolder);
             $scope.getSnaps(function (snaps) {
@@ -404,6 +405,8 @@
                 $scope.isViewingSnap = true;
                 $scope.snap = snap;
                 $ionicLoading.hide();
+                $rootScope.hideTabs = 'tabs-item-hide';
+
                 snapHolder.appendChild(img);
                 self.itv = $interval(function () {
                     $scope.remaining -= 1;
