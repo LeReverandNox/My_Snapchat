@@ -578,6 +578,7 @@
 
             if (videoSource === undefined) {
                 videoSource = self.sources[0];
+                this.currSource = 0;
             }
             self.videoSource = videoSource;
 
