@@ -571,9 +571,6 @@
 
         this.showVideo = function (videoSource) {
             this.ready = false;
-            $ionicLoading.show({
-                template: 'Loading camera...'
-            });
 
             if (videoSource === undefined) {
                 videoSource = self.sources[0];
@@ -583,7 +580,11 @@
 
             navigator.getUserMedia = (navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
-            if (navigator.getUserMedia) {
+            if (!navigator.getUserMedia) {
+                $ionicLoading.show({
+                    template: 'Loading camera...'
+                });
+
                 var constraints = {
                     video: {
                         optional: [{

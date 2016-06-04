@@ -181,7 +181,6 @@
 
             self.videoPlayer.addEventListener('playing', getVideoSize);
             PreviewService.enabled = true;
-            $scope.previewEnabled = PreviewService.enabled;
         };
         this.previewErrorCallback = function (err) {
             console.log("The following error occured: ", err);
@@ -210,8 +209,8 @@
             self.destinataires = [];
         };
 
-        $scope.takePhoto = function (param) {
-            if (!PreviewService.enabled || param === "system") {
+        $scope.takePhoto = function () {
+            if (!PreviewService.enabled) {
                 self.launchCamera();
             } else {
                 self.takePictureFromPreview();
