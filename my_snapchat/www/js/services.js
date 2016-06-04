@@ -116,18 +116,17 @@
                     console.log(message);
                 },
                 {
-                    quality: 50
+                    quality: 49
                 }
             );
         };
 
         this.sendSnap = function (time, credentials, destinataires, image, successCallback) {
             var fileTransfer = new FileTransfer();
-
             var options = new FileUploadOptions();
             options.fileKey = "file";
-            options.fileName = image.substr(image.lastIndexOf('/') + 1);
             options.mimeType = "image/jpeg";
+            options.fileName = image.substr(image.lastIndexOf('/') + 1);
 
             var dests = [];
             destinataires.forEach(function (user) {
