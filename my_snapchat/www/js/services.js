@@ -580,7 +580,7 @@
 
             navigator.getUserMedia = (navigator.mediaDevices.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 
-            if (!navigator.getUserMedia) {
+            if (navigator.getUserMedia) {
                 $ionicLoading.show({
                     template: 'Loading camera...'
                 });
