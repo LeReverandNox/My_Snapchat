@@ -15,7 +15,7 @@
 
   <div class="list" ng-show="isListingSnaps">
       <ion-item collection-repeat="snap in snaps" ng-click="viewSnap(snap)">
-        <p>{{ snap.id_sender}}</p>
+        <p>#{{ snap.id_sender | leftpad:3 }}</p>
     </ion-item>
   </div>
 
