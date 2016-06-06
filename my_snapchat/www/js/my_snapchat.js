@@ -1,5 +1,5 @@
 /*jslint browser this for */
-/*global angular alert cordova window StatusBar*/
+/*global angular alert cordova window StatusBar console */
 
 (function () {
     'use strict';

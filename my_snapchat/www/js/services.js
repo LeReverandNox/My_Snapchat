@@ -1,5 +1,5 @@
 /*jslint browser this for */
-/*global angular alert FileTransfer FileUploadOptions $ MediaStreamTrack */
+/*global angular alert FileTransfer FileUploadOptions $ MediaStreamTrack console */
 
 (function () {
     'use strict';

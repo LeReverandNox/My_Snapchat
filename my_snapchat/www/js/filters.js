@@ -1,5 +1,5 @@
 /*jslint browser this for */
-/*global angular alert */
+/*global angular alert console */
 
 (function () {
     'use strict';
